@@ -7,6 +7,7 @@ const routes = require("../api/routes");
 const logger = require("../config/logger");
 const errorHandler = require("../api/middlewares/error.middleware");
 const sanitize = require('../api/middlewares/xss.middleware');
+const path = require("path");
 
 module.exports = () => {
   const app = express();
@@ -52,6 +53,7 @@ module.exports = () => {
   });
 
   app.use("/api", routes);
+  app.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
 
   app.use(errorHandler);
 

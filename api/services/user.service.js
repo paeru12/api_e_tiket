@@ -1,5 +1,6 @@
 const { User, Role, UserRole } = require("../../models");
 const bcrypt = require("../../utils/bcrypt");
+const deleteImage = require("../utils/deleteImage");
 
 module.exports = {
   async getAll() {
@@ -25,10 +26,11 @@ module.exports = {
     const hashed = await bcrypt.hash(data.password);
 
     const user = await User.create({
+      full_name: data.full_name,
       email: data.email,
       password_hash: hashed,
-      full_name: data.full_name,
-      phone: data.phone
+      phone: data.phone,
+      image: data.image || null
     });
 
     // Assign role
@@ -49,6 +51,11 @@ module.exports = {
     const user = await User.findByPk(id);
     if (!user) throw new Error("User not found");
 
+    // 🔥 hapus avatar lama jika diganti
+    if (data.image && user.image) {
+      deleteImage(user.image);
+    }
+
     await user.update(data);
     return user;
   },
@@ -57,7 +64,12 @@ module.exports = {
     const user = await User.findByPk(id);
     if (!user) throw new Error("User not found");
 
-    await user.destroy(); // soft delete aktif
+    // 🔥 hapus avatar saat delete user
+    if (user.image) {
+      deleteImage(user.image);
+    }
+
+    await user.destroy();
     return { message: "User deleted" };
   },
 

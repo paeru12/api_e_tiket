@@ -23,21 +23,14 @@ module.exports = (sequelize, DataTypes) => {
       photo_url: {
         type: DataTypes.STRING,
         allowNull: true,
-      },
-      created_at: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-      },
-      updated_at: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-      },
+      }
     },
     {
       tableName: "customer_users",
       timestamps: true,
       createdAt: "created_at",
       updatedAt: "updated_at",
+      deletedAt: "deleted_at",
       paranoid: true,
       underscored: true
     }

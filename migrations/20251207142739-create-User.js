@@ -34,6 +34,22 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: false
       },
+      failed_login_attempts: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
+      is_locked: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
+      locked_at: {
+        type: Sequelize.DATE,
+        allowNull: true
+      },
+      image: {
+        type: Sequelize.TEXT,
+        allowNull: true
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE

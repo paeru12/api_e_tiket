@@ -12,7 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     full_name: DataTypes.STRING,
     phone: DataTypes.STRING,
     is_active: DataTypes.BOOLEAN,
-    is_email_verified: DataTypes.BOOLEAN
+    is_email_verified: DataTypes.BOOLEAN,
+    failed_login_attempts: DataTypes.INTEGER,
+    is_locked: DataTypes.BOOLEAN,
+    locked_at: DataTypes.DATE,
+    image: DataTypes.TEXT
   }, {
     tableName: 'users',
     paranoid: true,

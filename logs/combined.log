@@ -49,3 +49,531 @@
 {"level":"info","message":"POST /api/users","timestamp":"2025-12-07T15:53:45.416Z"}
 {"level":"info","message":"POST /api/users","timestamp":"2025-12-07T15:54:55.311Z"}
 {"level":"info","message":"POST /api/users","timestamp":"2025-12-07T15:56:58.612Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-11T10:27:30.076Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-11T10:27:30.108Z"}
+{"level":"info","message":"POST /api/users/auth/customer/request-otp","timestamp":"2025-12-11T10:31:10.229Z"}
+{"level":"info","message":"POST /api/auth/customer/request-otp","timestamp":"2025-12-11T10:31:25.548Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-11T10:32:49.345Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-11T10:32:49.383Z"}
+{"level":"info","message":"POST /api/auth/customer/request-otp","timestamp":"2025-12-11T10:33:33.577Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-11T10:44:41.838Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-11T10:44:41.928Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-11T10:44:52.336Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-11T10:44:52.407Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-11T10:55:41.888Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-11T10:56:59.638Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-11T10:56:59.683Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:15:50.025Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:15:50.055Z"}
+{"level":"info","message":"POST /api/auth/customer/request-otp","timestamp":"2025-12-12T10:16:55.333Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:25:04.591Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:25:04.629Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:25:57.868Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:25:57.909Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:26:30.327Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:26:30.362Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:26:51.940Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:26:51.965Z"}
+{"level":"info","message":"POST /api/auth/customer/request-otp","timestamp":"2025-12-12T10:27:29.009Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:28:26.277Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:28:26.301Z"}
+{"level":"info","message":"POST /api/auth/customer/request-otp","timestamp":"2025-12-12T10:28:33.456Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:32:33.122Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:32:33.172Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:32:47.051Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:32:47.080Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:33:00.122Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:33:00.153Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:33:14.995Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:33:15.019Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:35:16.857Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:35:16.959Z"}
+{"level":"info","message":"POST /api/auth/customer/request-otp","timestamp":"2025-12-12T10:35:17.128Z"}
+{"level":"info","message":"GET /api/users/auth/customer/verify-otp","timestamp":"2025-12-12T10:37:56.501Z"}
+{"level":"info","message":"GET /api/auth/customer/verify-otp","timestamp":"2025-12-12T10:38:11.055Z"}
+{"level":"info","message":"GET /api/auth/customer/verify-otp","timestamp":"2025-12-12T10:38:44.442Z"}
+{"level":"info","message":"GET /api/auth/customer/verify-otp","timestamp":"2025-12-12T10:39:05.145Z"}
+{"level":"info","message":"GET /api/auth/customer/verify-otp","timestamp":"2025-12-12T10:39:29.202Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:40:01.473Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:40:01.513Z"}
+{"level":"info","message":"POST /api/auth/customer/verify-otp","timestamp":"2025-12-12T10:47:23.501Z"}
+{"level":"info","message":"POST /api/auth/customer/request-otp","timestamp":"2025-12-12T10:47:47.438Z"}
+{"level":"info","message":"POST /api/auth/customer/verify-otp","timestamp":"2025-12-12T10:48:24.090Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:49:18.854Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:49:18.916Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:49:47.311Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:49:47.456Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:50:24.704Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:50:24.731Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:51:33.632Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:51:33.663Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-12T10:51:44.471Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-12T10:51:44.507Z"}
+{"level":"info","message":"POST /api/auth/customer/verify-otp","timestamp":"2025-12-12T10:54:38.176Z"}
+{"level":"info","message":"POST /api/auth/customer/request-otp","timestamp":"2025-12-12T10:54:49.907Z"}
+{"level":"info","message":"POST /api/auth/customer/verify-otp","timestamp":"2025-12-12T10:55:38.316Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T05:56:34.024Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T05:56:34.057Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T05:58:04.284Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T05:58:48.338Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T06:02:09.954Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:02:28.619Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:02:28.646Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T06:02:34.635Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:33:38.288Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:33:38.333Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:33:48.090Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:33:48.118Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:34:15.385Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:34:15.410Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:34:27.477Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:34:27.509Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:34:34.218Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:34:34.246Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:34:50.721Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:34:50.748Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:35:26.845Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:35:26.886Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:35:37.122Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:35:37.148Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:36:00.263Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:36:00.292Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:36:33.254Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:36:33.279Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:36:58.447Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:36:58.479Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:37:17.972Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:37:18.090Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:37:34.935Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:37:34.967Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:37:46.542Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:37:46.566Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:38:08.855Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:38:08.891Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:43:18.989Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:43:19.028Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:43:30.008Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:43:30.050Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T06:43:50.342Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:44:46.205Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:44:46.270Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:45:06.121Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:45:06.159Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-16T06:46:43.767Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T06:50:04.947Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T06:50:05.028Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-16T06:50:28.754Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T06:51:39.906Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T06:51:56.983Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T06:54:41.313Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-16T06:54:53.634Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T06:55:09.634Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T06:56:01.644Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-16T06:58:43.417Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T06:58:52.771Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T06:59:53.563Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T10:11:05.789Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T10:11:05.825Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-16T10:12:07.568Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T10:13:18.637Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T10:13:18.711Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-16T10:13:21.183Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-16T10:13:49.545Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T10:14:11.036Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T10:14:11.072Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-16T10:14:19.448Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T10:16:43.960Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T10:17:06.937Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T10:42:40.194Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T10:42:40.234Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-16T10:42:50.544Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T10:45:09.876Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T10:45:09.905Z"}
+{"level":"error","message":"Invalid JSON received","timestamp":"2025-12-16T10:46:21.217Z"}
+{"level":"error","message":"Invalid JSON format","stack":"Error: Invalid JSON format\n    at verify (C:\\Yukti\\E-Tiket\\api_e_tiket\\loaders\\express.js:31:17)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\body-parser\\lib\\read.js:146:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)\n    at invokeCallback (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\raw-body\\index.js:238:16)\n    at done (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\raw-body\\index.js:227:7)\n    at IncomingMessage.onEnd (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\raw-body\\index.js:287:7)\n    at IncomingMessage.emit (node:events:508:28)\n    at endReadableNT (node:internal/streams/readable:1701:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)","timestamp":"2025-12-16T10:46:21.225Z"}
+{"level":"info","message":"POST /api/auth/admin/logout","timestamp":"2025-12-16T10:47:29.667Z"}
+{"level":"error","message":"WHERE parameter \"token\" has invalid \"undefined\" value","stack":"Error: WHERE parameter \"token\" has invalid \"undefined\" value\n    at MySQLQueryGenerator.whereItemQuery (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\sequelize\\lib\\dialects\\abstract\\query-generator.js:1746:13)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\sequelize\\lib\\dialects\\abstract\\query-generator.js:1737:25\n    at Array.forEach (<anonymous>)\n    at MySQLQueryGenerator.whereItemsQuery (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\sequelize\\lib\\dialects\\abstract\\query-generator.js:1735:35)\n    at MySQLQueryGenerator.getWhereConditions (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\sequelize\\lib\\dialects\\abstract\\query-generator.js:2078:19)\n    at MySQLQueryGenerator.deleteQuery (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\sequelize\\lib\\dialects\\mysql\\query-generator.js:272:18)\n    at MySQLQueryInterface.bulkDelete (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\sequelize\\lib\\dialects\\abstract\\query-interface.js:403:59)\n    at AdminRefreshToken.destroy (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\sequelize\\lib\\model.js:1838:42)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.logout (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\services\\adminAuth.service.js:93:5)","timestamp":"2025-12-16T10:47:29.677Z"}
+{"level":"info","message":"POST /api/auth/admin/logout","timestamp":"2025-12-16T10:48:06.322Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T10:48:12.960Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-16T10:48:28.666Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T10:48:41.848Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-16T10:49:01.585Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T10:53:30.708Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T10:53:30.735Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T10:53:37.085Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T10:53:37.106Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-16T10:55:43.773Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-16T10:55:43.808Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T15:36:14.561Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T15:36:14.593Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-17T15:36:47.490Z"}
+{"level":"info","message":"GET /api/kategoris","timestamp":"2025-12-17T15:37:15.346Z"}
+{"level":"info","message":"POST /api/kategoris","timestamp":"2025-12-17T15:40:05.851Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T15:42:25.187Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T15:42:25.421Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T15:42:31.111Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T15:42:31.139Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T15:43:13.723Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T15:43:13.753Z"}
+{"level":"info","message":"GET /api/kategoris","timestamp":"2025-12-17T15:45:52.932Z"}
+{"level":"info","message":"GET /media/1765986005909.webp","timestamp":"2025-12-17T15:46:20.430Z"}
+{"level":"info","message":"GET /media/uploads/kategoris/1765986005909.webp","timestamp":"2025-12-17T15:46:40.219Z"}
+{"level":"info","message":"GET /uploads/kategoris/1765986005909.webp","timestamp":"2025-12-17T15:47:16.575Z"}
+{"level":"info","message":"GET /media/kategoris/1765986005909.webp","timestamp":"2025-12-17T15:47:22.074Z"}
+{"level":"info","message":"GET /favicon.ico","timestamp":"2025-12-17T15:47:22.213Z"}
+{"level":"info","message":"GET /uploads/kategoris/1765986005909.webp","timestamp":"2025-12-17T15:48:30.127Z"}
+{"level":"info","message":"GET /uploads/kategoris/1765986005909.webp","timestamp":"2025-12-17T15:48:31.140Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T15:48:37.102Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T15:48:37.181Z"}
+{"level":"info","message":"GET /uploads/kategoris/1765986005909.webp","timestamp":"2025-12-17T15:48:39.516Z"}
+{"level":"info","message":"GET /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T15:49:51.550Z"}
+{"level":"info","message":"GET /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T15:50:13.961Z"}
+{"level":"info","message":"GET /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T15:55:24.097Z"}
+{"level":"info","message":"GET /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T15:56:00.948Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-17T15:56:11.265Z"}
+{"level":"info","message":"GET /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T15:56:30.777Z"}
+{"level":"info","message":"GET /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T15:57:06.195Z"}
+{"level":"info","message":"PUT /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T15:57:23.712Z"}
+{"level":"info","message":"GET /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T15:57:41.720Z"}
+{"level":"info","message":"PUT /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T15:59:16.650Z"}
+{"level":"info","message":"GET //uploads/kategoris/1765987156794.webp","timestamp":"2025-12-17T15:59:34.206Z"}
+{"level":"info","message":"GET /uploads/kategoris/1765987156794.webp","timestamp":"2025-12-17T15:59:40.167Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T16:00:13.906Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T16:00:13.945Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T16:08:19.938Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T16:08:19.996Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T16:08:54.377Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T16:08:54.408Z"}
+{"level":"info","message":"GET /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T16:09:16.118Z"}
+{"level":"info","message":"PUT /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T16:09:37.578Z"}
+{"level":"info","message":"GET /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T16:09:45.077Z"}
+{"level":"info","message":"DELETE /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T16:11:00.598Z"}
+{"level":"info","message":"DELETE /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T16:11:18.625Z"}
+{"level":"info","message":"GET /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T16:11:25.007Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-17T16:11:31.603Z"}
+{"level":"info","message":"DELETE /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T16:11:49.715Z"}
+{"level":"info","message":"POST /api/kategoris","timestamp":"2025-12-17T16:12:54.568Z"}
+{"level":"info","message":"POST /api/kategoris","timestamp":"2025-12-17T16:13:15.601Z"}
+{"level":"info","message":"POST /api/kategoris","timestamp":"2025-12-17T16:13:22.381Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T16:14:26.324Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T16:14:26.386Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T16:14:49.374Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T16:14:49.405Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T16:14:59.568Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T16:14:59.635Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T16:15:07.539Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T16:15:07.566Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T16:15:22.092Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T16:15:22.131Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T16:15:38.858Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T16:15:38.911Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T16:15:57.193Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T16:15:57.231Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T16:16:36.172Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T16:16:36.222Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T16:16:54.418Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T16:16:54.449Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T16:17:06.486Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T16:17:06.523Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-17T16:17:42.473Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-17T16:17:42.497Z"}
+{"level":"info","message":"GET /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T16:18:10.920Z"}
+{"level":"info","message":"GET /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T16:18:15.868Z"}
+{"level":"info","message":"GET /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T16:18:32.826Z"}
+{"level":"info","message":"GET /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T16:18:37.183Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-17T16:18:47.599Z"}
+{"level":"info","message":"GET /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-17T16:19:07.654Z"}
+{"level":"error","message":"Kategori not found","stack":"Error: Kategori not found\n    at Object.getOne (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\services\\kategori.service.js:11:30)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async show (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\kategori.controller.js:10:22)","timestamp":"2025-12-17T16:19:07.706Z"}
+{"level":"info","message":"GET /api/kategoris/8edcd7d-a40c-4cf6-a9aa-5f94b21db7bd","timestamp":"2025-12-17T16:19:48.863Z"}
+{"level":"error","message":"Kategori not found","stack":"Error: Kategori not found\n    at Object.getOne (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\services\\kategori.service.js:11:30)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async show (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\kategori.controller.js:10:22)","timestamp":"2025-12-17T16:19:48.973Z"}
+{"level":"info","message":"GET /api/kategoris","timestamp":"2025-12-17T16:20:24.217Z"}
+{"level":"info","message":"GET /api/kategoris/e8edcd7d-a40c-4cf6-a9aa-5f94b21db7bd","timestamp":"2025-12-17T16:20:41.204Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T08:49:07.514Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T08:49:07.552Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-18T08:50:49.712Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-18T08:51:07.056Z"}
+{"level":"info","message":"PUT /api/users/999cf76b-01f9-47fc-b6aa-81f78d533be2","timestamp":"2025-12-18T08:52:50.525Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'full_name')","stack":"TypeError: Cannot read properties of undefined (reading 'full_name')\n    at update (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\user.controller.js:43:29)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\middlewares\\validate.middleware.js:15:3\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:295:15","timestamp":"2025-12-18T08:52:50.559Z"}
+{"level":"info","message":"PUT /api/users/999cf76b-01f9-47fc-b6aa-81f78d533be2","timestamp":"2025-12-18T08:53:07.729Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'full_name')","stack":"TypeError: Cannot read properties of undefined (reading 'full_name')\n    at update (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\user.controller.js:43:29)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\middlewares\\validate.middleware.js:15:3\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:295:15","timestamp":"2025-12-18T08:53:07.859Z"}
+{"level":"info","message":"PUT /api/users/999cf76b-01f9-47fc-b6aa-81f78d533be2","timestamp":"2025-12-18T08:53:22.363Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'full_name')","stack":"TypeError: Cannot read properties of undefined (reading 'full_name')\n    at update (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\user.controller.js:43:29)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\middlewares\\validate.middleware.js:15:3\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:295:15","timestamp":"2025-12-18T08:53:22.378Z"}
+{"level":"info","message":"PUT /api/users/999cf76b-01f9-47fc-b6aa-81f78d533be2","timestamp":"2025-12-18T08:54:00.785Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'full_name')","stack":"TypeError: Cannot read properties of undefined (reading 'full_name')\n    at update (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\user.controller.js:43:29)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\middlewares\\validate.middleware.js:15:3\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:295:15","timestamp":"2025-12-18T08:54:00.789Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T09:49:20.235Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T09:49:20.359Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-18T09:49:34.121Z"}
+{"level":"info","message":"PUT /api/users/999cf76b-01f9-47fc-b6aa-81f78d533be2","timestamp":"2025-12-18T09:49:58.521Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'full_name')","stack":"TypeError: Cannot read properties of undefined (reading 'full_name')\n    at update (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\user.controller.js:43:29)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\middlewares\\validate.middleware.js:15:3\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:295:15","timestamp":"2025-12-18T09:49:58.551Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T09:51:13.583Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T09:51:13.619Z"}
+{"level":"info","message":"PUT /api/users/999cf76b-01f9-47fc-b6aa-81f78d533be2","timestamp":"2025-12-18T09:51:33.294Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'full_name')","stack":"TypeError: Cannot read properties of undefined (reading 'full_name')\n    at update (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\user.controller.js:43:29)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\middlewares\\validate.middleware.js:15:3\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:295:15","timestamp":"2025-12-18T09:51:33.320Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T09:52:18.706Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T09:52:18.734Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T09:52:58.463Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T09:52:58.492Z"}
+{"level":"info","message":"PUT /api/users/999cf76b-01f9-47fc-b6aa-81f78d533be2","timestamp":"2025-12-18T09:53:02.137Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'full_name')","stack":"TypeError: Cannot read properties of undefined (reading 'full_name')\n    at update (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\user.controller.js:43:29)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\middlewares\\validate.middleware.js:15:3\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:295:15","timestamp":"2025-12-18T09:53:02.306Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T09:53:30.132Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T09:53:30.160Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T09:53:39.387Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T09:53:39.412Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T09:53:45.992Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T09:53:46.130Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T09:53:50.498Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T09:53:50.533Z"}
+{"level":"info","message":"PUT /api/users/999cf76b-01f9-47fc-b6aa-81f78d533be2","timestamp":"2025-12-18T09:54:00.612Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'full_name')","stack":"TypeError: Cannot read properties of undefined (reading 'full_name')\n    at update (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\user.controller.js:43:29)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\middlewares\\validate.middleware.js:15:3\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:295:15","timestamp":"2025-12-18T09:54:00.644Z"}
+{"level":"info","message":"PUT /api/users/999cf76b-01f9-47fc-b6aa-81f78d533be2","timestamp":"2025-12-18T09:54:14.163Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'full_name')","stack":"TypeError: Cannot read properties of undefined (reading 'full_name')\n    at update (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\user.controller.js:43:29)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\middlewares\\validate.middleware.js:15:3\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:295:15","timestamp":"2025-12-18T09:54:14.176Z"}
+{"level":"info","message":"PUT /api/users/999cf76b-01f9-47fc-b6aa-81f78d533be2","timestamp":"2025-12-18T09:55:01.673Z"}
+{"level":"error","message":"Cannot read properties of undefined (reading 'full_name')","stack":"TypeError: Cannot read properties of undefined (reading 'full_name')\n    at update (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\user.controller.js:43:29)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\middlewares\\validate.middleware.js:15:3\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:295:15","timestamp":"2025-12-18T09:55:01.680Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T10:00:46.784Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T10:00:46.911Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T10:01:13.366Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T10:01:13.391Z"}
+{"level":"info","message":"PUT /api/users/999cf76b-01f9-47fc-b6aa-81f78d533be2","timestamp":"2025-12-18T10:01:33.754Z"}
+{"level":"warn","message":"Validation failed","timestamp":"2025-12-18T10:01:33.862Z"}
+{"level":"info","message":"PUT /api/users/999cf76b-01f9-47fc-b6aa-81f78d533be2","timestamp":"2025-12-18T10:01:49.939Z"}
+{"level":"warn","message":"Validation failed","timestamp":"2025-12-18T10:01:49.951Z"}
+{"level":"info","message":"PUT /api/users/999cf76b-01f9-47fc-b6aa-81f78d533be2","timestamp":"2025-12-18T10:01:57.824Z"}
+{"level":"info","message":"GET /uploads/users/1766052117841-293612635.webp","timestamp":"2025-12-18T10:02:22.969Z"}
+{"level":"info","message":"GET /favicon.ico","timestamp":"2025-12-18T10:02:23.615Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T10:03:46.367Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T10:03:46.430Z"}
+{"level":"info","message":"POST /api/users","timestamp":"2025-12-18T10:07:00.515Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-18T10:07:07.731Z"}
+{"level":"info","message":"POST /api/users","timestamp":"2025-12-18T10:07:30.799Z"}
+{"level":"info","message":"PUT /api/users/9530f55f-8402-4403-9ec9-27fcf5d5a7f7","timestamp":"2025-12-18T10:08:50.892Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-18T10:08:58.722Z"}
+{"level":"info","message":"PUT /api/users/9530f55f-8402-4403-9ec9-27fcf5d5a7f7","timestamp":"2025-12-18T10:09:15.028Z"}
+{"level":"error","message":"deleteImage is not defined","stack":"ReferenceError: deleteImage is not defined\n    at Object.update (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\services\\user.service.js:55:7)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async update (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\user.controller.js:57:20)","timestamp":"2025-12-18T10:09:15.224Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T10:10:04.921Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T10:10:04.979Z"}
+{"level":"info","message":"PUT /api/users/9530f55f-8402-4403-9ec9-27fcf5d5a7f7","timestamp":"2025-12-18T10:10:09.330Z"}
+{"level":"info","message":"GET /api/users/9530f55f-8402-4403-9ec9-27fcf5d5a7f7","timestamp":"2025-12-18T10:10:46.497Z"}
+{"level":"info","message":"GET /api/users/9530f55f-8402-4403-9ec9-27fcf5d5a7f7","timestamp":"2025-12-18T10:11:06.463Z"}
+{"level":"info","message":"DELETE /api/users/9530f55f-8402-4403-9ec9-27fcf5d5a7f7","timestamp":"2025-12-18T10:11:54.054Z"}
+{"level":"info","message":"DELETE /api/users/9530f55f-8402-4403-9ec9-27fcf5d5a7f7","timestamp":"2025-12-18T10:12:16.769Z"}
+{"level":"info","message":"DELETE /api/users/9530f55f-8402-4403-9ec9-27fcf5d5a7f7","timestamp":"2025-12-18T10:14:29.948Z"}
+{"level":"error","message":"User not found","stack":"Error: User not found\n    at Object.remove (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\services\\user.service.js:65:22)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async remove (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\user.controller.js:66:16)","timestamp":"2025-12-18T10:14:29.978Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T10:39:24.613Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T10:39:24.663Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T11:08:57.182Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T11:08:57.240Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T11:09:08.602Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T11:09:08.644Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T11:09:56.344Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T11:09:56.398Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T11:10:09.121Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T11:10:09.147Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T11:10:45.488Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T11:10:45.522Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T11:10:51.306Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T11:10:51.349Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-18T11:12:57.132Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-18T11:12:57.164Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-18T11:14:09.373Z"}
+{"level":"info","message":"PUT /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-18T11:14:37.074Z"}
+{"level":"warn","message":"Validation failed","timestamp":"2025-12-18T11:14:37.126Z"}
+{"level":"info","message":"PUT /api/kategoris/6cd049c7-bc07-4d08-967a-2868790a4b2f","timestamp":"2025-12-18T11:14:44.490Z"}
+{"level":"info","message":"GET /api/kategoris","timestamp":"2025-12-18T11:15:00.361Z"}
+{"level":"info","message":"PUT /api/kategoris/e8edcd7d-a40c-4cf6-a9aa-5f94b21db7bd","timestamp":"2025-12-18T11:15:25.217Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T05:24:12.593Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T05:24:12.634Z"}
+{"level":"info","message":"GET /","timestamp":"2025-12-22T05:43:12.041Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T06:25:42.526Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T06:25:42.571Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T06:26:01.234Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T06:26:01.256Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T06:26:04.920Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T06:26:04.956Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T06:26:43.866Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T06:26:43.886Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T06:27:25.598Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T06:27:25.622Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T06:27:32.094Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T06:27:32.114Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-22T06:30:03.920Z"}
+{"level":"info","message":"POST /api/kategoris","timestamp":"2025-12-22T06:31:19.458Z"}
+{"level":"info","message":"POST /api/kategoris","timestamp":"2025-12-22T06:32:20.767Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T06:33:11.367Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T06:33:11.418Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T06:33:51.595Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T06:33:51.628Z"}
+{"level":"info","message":"POST /api/kategoris","timestamp":"2025-12-22T06:34:17.095Z"}
+{"level":"info","message":"POST /api/kategoris","timestamp":"2025-12-22T06:34:56.540Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T06:36:25.894Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T06:36:25.938Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T06:36:38.970Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T06:36:38.998Z"}
+{"level":"info","message":"POST /api/kategoris","timestamp":"2025-12-22T06:36:40.798Z"}
+{"level":"info","message":"POST /api/kategoris","timestamp":"2025-12-22T06:37:57.410Z"}
+{"level":"info","message":"PUT /api/kategoris/50c790b3-f51a-4200-bcdd-2148c8af577c","timestamp":"2025-12-22T06:39:24.519Z"}
+{"level":"info","message":"PUT /api/kategoris/50c790b3-f51a-4200-bcdd-2148c8af577c","timestamp":"2025-12-22T06:39:40.108Z"}
+{"level":"info","message":"PUT /api/kategoris/50c790b3-f51a-4200-bcdd-2148c8af577c","timestamp":"2025-12-22T06:40:02.423Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T06:41:37.879Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T06:41:37.912Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T06:43:21.010Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T06:43:21.040Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T06:43:40.716Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T06:43:40.746Z"}
+{"level":"info","message":"DELETE /api/kategoris/50c790b3-f51a-4200-bcdd-2148c8af577c","timestamp":"2025-12-22T06:44:44.712Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:29:37.551Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:29:37.612Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:29:52.312Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:29:52.338Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:30:37.972Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:30:38.000Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:31:15.493Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:31:15.557Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:31:51.579Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:31:51.614Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:32:49.304Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:32:49.338Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:33:39.177Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:33:39.203Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:35:21.702Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:35:21.744Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:36:44.557Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:36:44.588Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:37:25.285Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:37:25.308Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:37:41.931Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:37:41.956Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:37:56.180Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:37:56.208Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:38:19.962Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:38:20.047Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:38:27.929Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:38:28.018Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:39:19.518Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:39:19.542Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:42:19.585Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:42:19.621Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:42:33.254Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:42:33.281Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:48:15.829Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:48:15.887Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:49:05.727Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:49:05.749Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:49:22.449Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:49:22.474Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:50:21.399Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:50:21.422Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:55:14.810Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:55:14.836Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-22T07:56:20.691Z"}
+{"level":"info","message":"GET /api/regions","timestamp":"2025-12-22T07:56:49.470Z"}
+{"level":"info","message":"GET /api/regions/e8edcd7d-a40c-4cf6-a9aa-5f94b21db7bd","timestamp":"2025-12-22T07:57:24.639Z"}
+{"level":"info","message":"POST /api/regions","timestamp":"2025-12-22T07:57:46.854Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:58:42.560Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:58:42.653Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:59:04.059Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:59:04.172Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:59:35.319Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:59:35.349Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T07:59:50.166Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T07:59:50.197Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T08:00:11.072Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T08:00:11.096Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T08:00:15.719Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T08:00:15.755Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T08:00:32.920Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T08:00:32.947Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T08:01:13.014Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T08:01:13.059Z"}
+{"level":"info","message":"POST /api/kategoris","timestamp":"2025-12-22T08:02:31.850Z"}
+{"level":"info","message":"POST /api/kategoris","timestamp":"2025-12-22T08:03:00.731Z"}
+{"level":"warn","message":"Validation failed","timestamp":"2025-12-22T08:03:00.744Z"}
+{"level":"info","message":"POST /api/kategoris","timestamp":"2025-12-22T08:03:09.351Z"}
+{"level":"info","message":"POST /api/regions","timestamp":"2025-12-22T08:04:43.418Z"}
+{"level":"info","message":"POST /api/regions","timestamp":"2025-12-22T08:06:08.618Z"}
+{"level":"info","message":"POST /api/regions","timestamp":"2025-12-22T08:06:41.088Z"}
+{"level":"info","message":"PUT /api/kategoris/9b628a16-1b30-445e-bbfd-9f1e5df8bd9a","timestamp":"2025-12-22T08:10:03.836Z"}
+{"level":"info","message":"PUT /api/kategoris/9b628a16-1b30-445e-bbfd-9f1e5df8bd9a","timestamp":"2025-12-22T08:10:20.511Z"}
+{"level":"info","message":"PUT /api/regions/9b628a16-1b30-445e-bbfd-9f1e5df8bd9a","timestamp":"2025-12-22T08:10:33.963Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T08:11:17.188Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T08:11:17.257Z"}
+{"level":"info","message":"PUT /api/regions/9b628a16-1b30-445e-bbfd-9f1e5df8bd9a","timestamp":"2025-12-22T08:11:22.212Z"}
+{"level":"info","message":"PUT /api/regions/9b628a16-1b30-445e-bbfd-9f1e5df8bd9a","timestamp":"2025-12-22T08:11:45.440Z"}
+{"level":"info","message":"POST /api/auth/admin/logout","timestamp":"2025-12-22T08:12:03.364Z"}
+{"level":"error","message":"service.logout is not a function","stack":"TypeError: service.logout is not a function\n    at logout (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\adminAuth.controller.js:32:19)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:295:15\n    at processParams (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:582:12)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:291:5)\n    at router.handle (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:186:3)","timestamp":"2025-12-22T08:12:03.371Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T08:13:51.782Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T08:13:51.932Z"}
+{"level":"info","message":"POST /api/auth/admin/logout","timestamp":"2025-12-22T08:14:01.895Z"}
+{"level":"error","message":"AdminRefreshToken is not defined","stack":"ReferenceError: AdminRefreshToken is not defined\n    at Object.logout (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\services\\adminAuth.service.js:120:5)\n    at logout (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\adminAuth.controller.js:32:19)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:157:13)\n    at Route.dispatch (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\route.js:117:3)\n    at handle (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:435:11)\n    at Layer.handleRequest (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\lib\\layer.js:152:17)\n    at C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:295:15\n    at processParams (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:582:12)\n    at next (C:\\Yukti\\E-Tiket\\api_e_tiket\\node_modules\\router\\index.js:291:5)","timestamp":"2025-12-22T08:14:01.904Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T08:15:00.850Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T08:15:00.923Z"}
+{"level":"info","message":"POST /api/auth/admin/logout","timestamp":"2025-12-22T08:15:09.155Z"}
+{"level":"info","message":"POST /api/auth/admin/logout","timestamp":"2025-12-22T08:15:52.267Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-22T08:16:10.705Z"}
+{"level":"info","message":"PUT /api/regions/9b628a16-1b30-445e-bbfd-9f1e5df8bd9a","timestamp":"2025-12-22T08:16:27.877Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T08:21:06.769Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T08:21:06.865Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T08:21:33.111Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T08:21:33.216Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T08:22:00.397Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T08:22:00.450Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T08:25:49.501Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T08:25:49.574Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T09:13:27.907Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T09:13:27.995Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T09:13:35.624Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T09:13:35.653Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T09:15:21.174Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T09:15:21.247Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T10:38:23.410Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T10:38:23.530Z"}
+{"level":"info","message":"POST /api/auth/admin/logout","timestamp":"2025-12-22T10:57:20.589Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-22T10:57:29.359Z"}
+{"level":"info","message":"POST /api/regions","timestamp":"2025-12-22T10:58:17.639Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T10:58:51.534Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T10:58:51.576Z"}
+{"level":"info","message":"POST /api/regions","timestamp":"2025-12-22T10:59:01.528Z"}
+{"level":"info","message":"GET /api/regions","timestamp":"2025-12-22T11:00:03.451Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T11:02:54.904Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T11:02:54.955Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T11:03:02.632Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T11:03:02.832Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T11:03:12.331Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T11:03:12.356Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-22T11:03:17.684Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-22T11:03:17.713Z"}
+{"level":"info","message":"POST /api/regions","timestamp":"2025-12-22T11:03:34.702Z"}
+{"level":"info","message":"GET /api/regions","timestamp":"2025-12-22T11:03:48.629Z"}
+{"level":"info","message":"GET /api/kategoris","timestamp":"2025-12-22T11:05:01.610Z"}
+{"level":"info","message":"POST /api/kategoris","timestamp":"2025-12-22T11:05:52.392Z"}
+{"level":"info","message":"DELETE /api/kategoris/c029662b-6326-47cb-8cf5-6474984989ea","timestamp":"2025-12-22T11:07:46.074Z"}
+{"level":"error","message":"Kategori not found","stack":"Error: Kategori not found\n    at Object.getOne (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\services\\kategori.service.js:33:26)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async destroy (C:\\Yukti\\E-Tiket\\api_e_tiket\\api\\controllers\\kategori.controller.js:65:31)","timestamp":"2025-12-22T11:07:46.101Z"}
+{"level":"info","message":"DELETE /api/regions/c029662b-6326-47cb-8cf5-6474984989ea","timestamp":"2025-12-22T11:07:59.079Z"}
+{"level":"info","message":"GET /api/kategoris","timestamp":"2025-12-22T11:08:25.333Z"}
+{"level":"info","message":"GET /api/regions","timestamp":"2025-12-22T11:09:13.490Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-23T06:48:16.767Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-23T06:48:16.799Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-23T07:56:00.611Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-23T07:56:00.723Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-23T08:50:47.040Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-23T08:50:47.090Z"}
+{"level":"info","message":"POST /api/auth/admin/login","timestamp":"2025-12-23T08:50:59.208Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-23T08:54:05.462Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-23T08:54:05.641Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-23T08:57:08.991Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-23T08:57:09.059Z"}
+{"level":"info","message":"GET /api/creators","timestamp":"2025-12-23T08:57:16.901Z"}
+{"level":"info","message":"POST /api/creators","timestamp":"2025-12-23T08:57:42.304Z"}
+{"level":"warn","message":"Validation failed","timestamp":"2025-12-23T08:57:42.408Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-23T08:58:31.158Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-23T08:58:31.230Z"}
+{"level":"info","message":"POST /api/creators","timestamp":"2025-12-23T08:58:35.169Z"}
+{"level":"info","message":"GET /api/creators/57e0fe5d-78e2-42ca-a6c1-f934e7416910","timestamp":"2025-12-23T09:01:19.192Z"}
+{"level":"info","message":"GET /api/creators","timestamp":"2025-12-23T09:02:08.382Z"}
+{"level":"info","message":"PUT /api/creators/57e0fe5d-78e2-42ca-a6c1-f934e7416910","timestamp":"2025-12-23T09:04:21.005Z"}
+{"level":"info","message":"PUT /api/creators/57e0fe5d-78e2-42ca-a6c1-f934e7416910","timestamp":"2025-12-23T09:04:44.520Z"}
+{"level":"info","message":"POST /api/creators","timestamp":"2025-12-23T09:05:35.990Z"}
+{"level":"info","message":"DELETE /api/creators/57e0fe5d-78e2-42ca-a6c1-f934e7416910","timestamp":"2025-12-23T09:06:31.715Z"}
+{"level":"info","message":"POST /api/auth/admin/refresh","timestamp":"2025-12-23T09:09:15.399Z"}
+{"level":"info","message":"DELETE /api/creators/57e0fe5d-78e2-42ca-a6c1-f934e7416910","timestamp":"2025-12-23T09:09:49.377Z"}
+{"level":"info","message":"GET /api/creators","timestamp":"2025-12-23T09:10:15.208Z"}
+{"level":"info","message":"GET /api/creators/57e0fe5d-78e2-42ca-a6c1-f934e7416910","timestamp":"2025-12-23T09:11:05.429Z"}
