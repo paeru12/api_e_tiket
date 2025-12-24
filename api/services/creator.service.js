@@ -38,8 +38,6 @@ module.exports = {
     const creator = await Creator.findByPk(id);
     if (!creator) throw new Error("Creator not found");
 
-    if (creator.image) deleteImage(creator.image);
-
     await creator.destroy();
     return { message: "Creator deleted" };
   },

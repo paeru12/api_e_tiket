@@ -577,3 +577,217 @@
 {"level":"info","message":"DELETE /api/creators/57e0fe5d-78e2-42ca-a6c1-f934e7416910","timestamp":"2025-12-23T09:09:49.377Z"}
 {"level":"info","message":"GET /api/creators","timestamp":"2025-12-23T09:10:15.208Z"}
 {"level":"info","message":"GET /api/creators/57e0fe5d-78e2-42ca-a6c1-f934e7416910","timestamp":"2025-12-23T09:11:05.429Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-23T09:46:18.701Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-23T09:46:18.780Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T04:06:28.447Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T04:06:28.476Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T04:07:03.329Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T04:07:03.361Z"}
+{"level":"info","message":"GET /api/v1/kategoris","timestamp":"2025-12-24T04:07:31.639Z"}
+{"level":"info","message":"GET /favicon.ico","timestamp":"2025-12-24T04:07:32.018Z"}
+{"level":"info","message":"GET /api/v1/kategoris","timestamp":"2025-12-24T04:08:29.355Z"}
+{"level":"info","message":"GET /api/v1/kategoris","timestamp":"2025-12-24T04:08:34.039Z"}
+{"level":"info","message":"GET /api/v1/kategori","timestamp":"2025-12-24T04:08:39.865Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T04:10:17.104Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T04:10:17.123Z"}
+{"level":"info","message":"GET /api/v1/kategori","timestamp":"2025-12-24T04:10:22.930Z"}
+{"level":"info","message":"GET /api/v1/kategori","timestamp":"2025-12-24T04:10:25.550Z"}
+{"level":"info","message":"GET /api/v1/kategori","timestamp":"2025-12-24T04:10:26.230Z"}
+{"level":"info","message":"GET /api/v1/kategori","timestamp":"2025-12-24T04:10:26.632Z"}
+{"level":"info","message":"GET /api/v1/kategori","timestamp":"2025-12-24T04:10:26.850Z"}
+{"level":"info","message":"GET /api/v1/kategori","timestamp":"2025-12-24T04:10:27.085Z"}
+{"level":"info","message":"GET /api/v1/kategori","timestamp":"2025-12-24T04:10:27.291Z"}
+{"level":"info","message":"GET /api/v1/kategori","timestamp":"2025-12-24T04:10:27.482Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T04:11:17.602Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T04:11:17.621Z"}
+{"level":"info","message":"GET /api/v1/kate","timestamp":"2025-12-24T04:11:26.498Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T04:12:12.982Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T04:12:13.000Z"}
+{"level":"info","message":"GET /api/v1/kate","timestamp":"2025-12-24T04:12:15.997Z"}
+{"level":"info","message":"GET /api/v1/kate","timestamp":"2025-12-24T04:12:16.731Z"}
+{"level":"info","message":"GET /api/v1/kate","timestamp":"2025-12-24T04:12:16.925Z"}
+{"level":"info","message":"GET /api/v1/kate","timestamp":"2025-12-24T04:12:17.116Z"}
+{"level":"info","message":"GET /api/v1/kate","timestamp":"2025-12-24T04:12:17.291Z"}
+{"level":"info","message":"GET /api/v1/kate","timestamp":"2025-12-24T04:12:17.492Z"}
+{"level":"info","message":"GET /api/v1/kate","timestamp":"2025-12-24T04:12:17.887Z"}
+{"level":"info","message":"GET /api/v1/kate","timestamp":"2025-12-24T04:12:18.300Z"}
+{"level":"info","message":"GET /api/v1/kate","timestamp":"2025-12-24T04:12:18.716Z"}
+{"level":"info","message":"GET /api/v1/kate","timestamp":"2025-12-24T04:12:18.972Z"}
+{"level":"info","message":"GET /api/v1/kate","timestamp":"2025-12-24T04:12:19.379Z"}
+{"level":"info","message":"GET /api/v1/kate","timestamp":"2025-12-24T04:12:19.554Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T04:13:37.112Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T04:13:37.132Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T04:13:42.184Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T04:13:42.202Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T04:13:46.616Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T04:13:46.645Z"}
+{"level":"info","message":"GET /api/v1/kate","timestamp":"2025-12-24T04:13:51.954Z"}
+{"level":"info","message":"GET /","timestamp":"2025-12-24T04:13:59.188Z"}
+{"level":"info","message":"GET /api/kategoris","timestamp":"2025-12-24T04:14:06.940Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T04:16:05.361Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T04:16:05.385Z"}
+{"level":"info","message":"GET /api/kategoris","timestamp":"2025-12-24T04:16:08.059Z"}
+{"level":"info","message":"GET /api/kategoris","timestamp":"2025-12-24T04:16:09.769Z"}
+{"level":"info","message":"GET /api/kategoris","timestamp":"2025-12-24T04:16:10.207Z"}
+{"level":"info","message":"GET /api/kategoris","timestamp":"2025-12-24T04:16:10.522Z"}
+{"level":"info","message":"GET /api/kategoris","timestamp":"2025-12-24T04:16:10.757Z"}
+{"level":"info","message":"GET /api/kategoris","timestamp":"2025-12-24T04:16:10.961Z"}
+{"level":"info","message":"GET /api/kategoris","timestamp":"2025-12-24T04:16:11.176Z"}
+{"level":"info","message":"GET /api/kategoris","timestamp":"2025-12-24T04:16:11.357Z"}
+{"level":"info","message":"GET /api/kategoris","timestamp":"2025-12-24T04:16:11.555Z"}
+{"level":"info","message":"GET /api/index","timestamp":"2025-12-24T04:16:15.366Z"}
+{"level":"info","message":"GET /api/fhed","timestamp":"2025-12-24T04:16:20.587Z"}
+{"level":"info","message":"GET /api/fed","timestamp":"2025-12-24T04:16:22.951Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-12-24T04:16:26.436Z"}
+{"level":"info","message":"GET /api/regions","timestamp":"2025-12-24T04:16:31.869Z"}
+{"level":"info","message":"POST /api/auth/admin/refresh","timestamp":"2025-12-24T04:21:29.045Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T04:24:05.925Z"}
+{"level":"info","message":"POST /api/events","timestamp":"2025-12-24T04:35:43.257Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T04:45:44.305Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T04:45:44.361Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T04:47:55.911Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T04:47:55.939Z"}
+{"level":"info","message":"PUT /api/events/","timestamp":"2025-12-24T04:49:40.003Z"}
+{"level":"info","message":"POST /api/auth/admin/refresh","timestamp":"2025-12-24T04:49:50.448Z"}
+{"level":"info","message":"PUT /api/events/","timestamp":"2025-12-24T04:50:08.371Z"}
+{"level":"info","message":"PUT /api/events/3b437e79-4018-4810-a66c-5d139a128dca","timestamp":"2025-12-24T04:50:32.440Z"}
+{"level":"warn","message":"Validation failed","timestamp":"2025-12-24T04:50:32.480Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T04:51:25.156Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T04:51:25.222Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T04:51:49.653Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T04:51:49.685Z"}
+{"level":"info","message":"PUT /api/events/3b437e79-4018-4810-a66c-5d139a128dca","timestamp":"2025-12-24T04:51:55.041Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T04:53:41.249Z"}
+{"level":"info","message":"POST /api/events","timestamp":"2025-12-24T04:57:03.465Z"}
+{"level":"info","message":"DELETE /api/events/8f3b7549-9013-48fb-af6f-ce05da2c1038","timestamp":"2025-12-24T05:00:34.610Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:01:48.285Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:01:48.345Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:03:32.466Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:03:32.528Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:11:13.311Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:11:13.655Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:11:33.061Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:11:33.098Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:21:48.663Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:21:48.745Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:22:04.791Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:22:04.840Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:22:29.296Z"}
+{"level":"info","message":"POST /api/auth/admin/refresh","timestamp":"2025-12-24T05:22:37.543Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:22:55.892Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:25:48.843Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:25:48.926Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:26:05.428Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:27:19.497Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:27:19.656Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:27:40.622Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:29:29.341Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:29:29.597Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:29:39.081Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:32:58.093Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:32:58.348Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:40:15.106Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:40:15.356Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:41:01.158Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:41:01.234Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:41:18.512Z"}
+{"level":"info","message":"POST /api/auth/admin/refresh","timestamp":"2025-12-24T05:41:30.852Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:41:49.657Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:42:43.178Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:42:43.547Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:43:06.854Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:43:06.912Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:43:14.765Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:43:37.464Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:43:37.548Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:43:44.204Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:44:13.383Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:44:13.454Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:44:27.983Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:44:45.470Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:44:45.575Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:45:01.018Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:45:01.126Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:45:11.398Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:45:11.436Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:45:22.992Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:46:05.281Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:46:05.317Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:46:12.254Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:46:59.099Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:46:59.206Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:47:00.924Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:47:32.783Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:47:39.821Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:47:43.314Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:47:46.113Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T05:47:50.280Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T05:55:26.559Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T05:55:26.628Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:00:06.492Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:00:06.555Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:00:36.908Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:00:36.939Z"}
+{"level":"info","message":"POST /api/auth/admin/refresh","timestamp":"2025-12-24T06:02:25.640Z"}
+{"level":"info","message":"GET /api/events/3b437e79-4018-4810-a66c-5d139a128dca","timestamp":"2025-12-24T06:02:44.783Z"}
+{"level":"info","message":"GET /api/events/synchronize-fest","timestamp":"2025-12-24T06:03:40.965Z"}
+{"level":"info","message":"GET /api/events/slug/synchronize-fest","timestamp":"2025-12-24T06:03:54.654Z"}
+{"level":"info","message":"GET /api/events/slug/synchronize-fest","timestamp":"2025-12-24T06:04:43.420Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:05:05.260Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:05:05.313Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:05:43.875Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:05:43.926Z"}
+{"level":"info","message":"GET /api/events/slug/synchronize-fest","timestamp":"2025-12-24T06:05:54.351Z"}
+{"level":"info","message":"GET /api/events/slug/synchronize-fest","timestamp":"2025-12-24T06:05:57.785Z"}
+{"level":"info","message":"GET /api/events/slug/synchronize-fest","timestamp":"2025-12-24T06:06:02.607Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:06:15.520Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:06:15.641Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:07:02.068Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:07:02.153Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:07:12.104Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:07:12.164Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:07:20.824Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:07:20.852Z"}
+{"level":"info","message":"GET /api/events/slug/synchronize-fest","timestamp":"2025-12-24T06:07:36.295Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:08:12.944Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:08:12.973Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:08:22.589Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:08:22.643Z"}
+{"level":"info","message":"GET /api/events/slug/synchronize-fest","timestamp":"2025-12-24T06:08:22.791Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:08:58.352Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:08:58.409Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:09:07.713Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:09:07.787Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:09:21.460Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:09:21.486Z"}
+{"level":"info","message":"GET /api/events/slug/synchronize-fest","timestamp":"2025-12-24T06:09:29.988Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:09:54.189Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:09:54.366Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:10:02.396Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:10:02.427Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:10:10.782Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:10:10.831Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:10:18.569Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:10:18.599Z"}
+{"level":"info","message":"GET /api/events/slug/synchronize-fest","timestamp":"2025-12-24T06:10:21.498Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:10:47.082Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:10:47.112Z"}
+{"level":"info","message":"GET /api/events/slug/synchronize-fest","timestamp":"2025-12-24T06:10:48.737Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:11:28.084Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:11:28.113Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:11:32.257Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:11:32.286Z"}
+{"level":"info","message":"GET /api/events/slug/synchronize-fest","timestamp":"2025-12-24T06:11:36.134Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T06:12:31.495Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T06:12:31.524Z"}
+{"level":"info","message":"GET /api/events/slug/synchronize-fest","timestamp":"2025-12-24T06:12:47.624Z"}
+{"level":"info","message":"GET /api/events/slug/synchronize-fest","timestamp":"2025-12-24T06:13:01.910Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T06:15:08.823Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T07:09:43.449Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T07:09:43.551Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T07:11:36.690Z"}
+{"level":"info","message":"POST /api/auth/admin/refresh","timestamp":"2025-12-24T07:12:00.306Z"}
+{"level":"info","message":"GET /api/events","timestamp":"2025-12-24T07:12:39.912Z"}
+{"level":"info","message":"POST /api/ticket-types/bulk","timestamp":"2025-12-24T07:13:23.005Z"}
+{"level":"info","message":"📦 Database connected","timestamp":"2025-12-24T09:25:59.251Z"}
+{"level":"info","message":"🚀 Server running on port 3000","timestamp":"2025-12-24T09:25:59.321Z"}

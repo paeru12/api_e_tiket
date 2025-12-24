@@ -2,11 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   const UserRole = sequelize.define('UserRole', {
     user_id: {
       type: DataTypes.UUID,
-      primaryKey: true     // ⬅ WAJIB
+      primaryKey: true
     },
     role_id: {
       type: DataTypes.UUID,
-      primaryKey: true     // ⬅ WAJIB
+      primaryKey: true
     }
   }, {
     tableName: 'user_roles',
