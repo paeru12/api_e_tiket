@@ -1,7 +1,7 @@
 // api/middlewares/apikey.js
 module.exports = function apiKey(req, res, next) {
   const clientKey = req.headers["x-api-key"];
-  const allowedKeys = (process.env.API_KEYS || "").split(",").map(k => k.trim());
+  const allowedKeys = (process.env.API_KEYS_FEND || "").split(",").map(k => k.trim());
   const allowedIPs = (process.env.API_ALLOW_IP || "").split(",").map(ip => ip.trim()).filter(Boolean);
 
   // Logging minimal

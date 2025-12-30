@@ -30,7 +30,7 @@ module.exports = {
       is_active: { type: Sequelize.BOOLEAN, defaultValue: true },
 
       status: {
-        type: Sequelize.ENUM("draft", "published", "archived"),
+        type: Sequelize.ENUM("draft", "published", "ended"),
         allowNull: false,
         defaultValue: "draft",
       },
@@ -41,7 +41,10 @@ module.exports = {
       map: { type: Sequelize.TEXT, allowNull: true },
       location: { type: Sequelize.STRING, allowNull: true },
       keywords: { type: Sequelize.TEXT, allowNull: true },
-
+      lowest_price: {
+        type: Sequelize.DECIMAL(15, 2),
+        allowNull: false,
+      },
       created_at: { allowNull: false, type: Sequelize.DATE },
       updated_at: { allowNull: false, type: Sequelize.DATE },
       deleted_at: { type: Sequelize.DATE },

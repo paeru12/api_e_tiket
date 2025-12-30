@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       time_end: DataTypes.TIME,
 
       is_active: DataTypes.BOOLEAN,
-      status: DataTypes.ENUM("draft", "published", "archived"),
+      status: DataTypes.ENUM("draft", "published", "ended"),
 
       image: DataTypes.TEXT,
       layout_venue: DataTypes.TEXT,
@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       map: DataTypes.TEXT,
       location: DataTypes.STRING,
       keywords: DataTypes.TEXT,
+      lowest_price: DataTypes.DECIMAL(15, 2),
     },
     {
       tableName: "events",
@@ -46,10 +47,11 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Event.associate = (models) => {
-    Event.belongsTo(models.Creator, { foreignKey: "creator_id" });
-    Event.belongsTo(models.Region, { foreignKey: "region_id" });
-    Event.belongsTo(models.Kategori, { foreignKey: "kategori_id" });
-    Event.belongsTo(models.User, { foreignKey: "user_id" });
+    Event.belongsTo(models.Creator, { foreignKey: "creator_id", as: "creators" });
+    Event.belongsTo(models.Region, { foreignKey: "region_id", as: "regions" });
+    Event.belongsTo(models.Kategori, { foreignKey: "kategori_id", as: "kategoris" });
+    Event.belongsTo(models.User, { foreignKey: "user_id", as: "users" });
+    Event.hasMany(models.TicketType, { foreignKey: "event_id", as: "ticket_types" });
   };
 
   return Event;

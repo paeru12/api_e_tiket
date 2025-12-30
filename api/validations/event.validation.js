@@ -22,7 +22,7 @@ module.exports = {
     map: Joi.string().allow("", null),
 
     keywords: Joi.string().allow("", null),
-    status: Joi.string().valid("draft", "published", "archived"),
+    status: Joi.string().valid("draft", "published", "ended").default("draft"),
   }),
 
   update: Joi.object({
@@ -39,5 +39,6 @@ module.exports = {
     location: Joi.string().optional(),
     map: Joi.string().optional(),
     keywords: Joi.string().optional(),
+    lowest_price: Joi.string().optional(),
   }),
 };

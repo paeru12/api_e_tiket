@@ -9,9 +9,9 @@ module.exports = {
       price: Joi.number().required(),
       total_stock: Joi.number().min(1).required(),
       max_per_order: Joi.number().min(1).required(),
-      status: Joi.string().valid("draft", "published", "closed").default("draft"),
+      status: Joi.string().valid("draft", "available", "closed").default("draft"),
       is_active: Joi.boolean().default(true),
-
+      deliver_ticket: Joi.date().required(),
       date_start: Joi.date().required(),
       date_end: Joi.date().required(),
       time_start: Joi.string().required(),

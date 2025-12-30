@@ -45,9 +45,10 @@ module.exports = {
         defaultValue: true,
       },
       status: {
-        type: Sequelize.ENUM("draft", "published", "closed"),
+        type: Sequelize.ENUM("draft", "available", "closed",),
         defaultValue: "draft"
       },
+      deliver_ticket: Sequelize.DATE,
       date_start: Sequelize.DATE,
       date_end: Sequelize.DATE,
       time_start: Sequelize.TIME,
