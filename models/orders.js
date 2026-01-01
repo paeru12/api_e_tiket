@@ -21,16 +21,32 @@ module.exports = (sequelize, DataTypes) => {
     {
       tableName: "orders",
       underscored: true,
-      paranoid: false,
     }
   );
 
   Order.associate = (models) => {
-    Order.hasMany(models.OrderItem, { foreignKey: "order_id", as: "order_items" });
-    Order.hasMany(models.Payment, { foreignKey: "order_id", as: "payments" });
-    Order.hasMany(models.Ticket, { foreignKey: "order_id", as: "tickets" });
-    Order.belongsTo(models.CustomerUser, {foreignKey: "customer_id", as: "customer"});
+    Order.belongsTo(models.CustomerUser, {
+      foreignKey: "customer_id",
+      as: "customer",
+    });
+
+    Order.hasMany(models.OrderItem, {
+      foreignKey: "order_id",
+      as: "items",
+    });
+
+    Order.hasMany(models.Payment, {
+      foreignKey: "order_id",
+      as: "payments",
+    });
+
+    Order.hasMany(models.Ticket, {
+      foreignKey: "order_id",
+      as: "tickets",
+    });
+
   };
+
 
   return Order;
 };

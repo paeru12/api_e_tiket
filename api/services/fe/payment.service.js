@@ -4,6 +4,7 @@ const { v4: uuid } = require("uuid");
 
 module.exports = {
   async createInvoice(orderId) {
+
     const order = await Order.findByPk(orderId);
     if (!order) throw new Error("Order not found");
 

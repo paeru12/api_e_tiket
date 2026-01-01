@@ -68,7 +68,6 @@ module.exports = {
       const order = await Order.create({
         id: uuid(),
         code_order: `INV-${Date.now()}`,
-        event_id: customerUser.event_id,
         customer_id: customerUser.id,
         customer_name: customer.full_name,
         customer_email: customer.email,
@@ -91,7 +90,7 @@ module.exports = {
           quantity: item.quantity,
           unit_price: ticketType.price,
           total_price: ticketType.price * item.quantity,
-          attendees: JSON.stringify(item.attendees)
+          attendees: item.attendees
         }, { transaction: trx });
       }
 

@@ -17,6 +17,13 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
+  
+  OrderItem.associate = (models) => {
+    OrderItem.belongsTo(models.TicketType, {
+      foreignKey: "ticket_type_id",
+      as: "ticket_type",
+    });
+  };
 
   return OrderItem;
 };

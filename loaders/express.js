@@ -11,6 +11,11 @@ const path = require("path");
 
 module.exports = () => {
   const app = express();
+  app.post(
+    "/api/xendit-callback",
+    express.json({ limit: "1mb" }),
+    require("../api/controllers/fe/paymentCallback.controller").xenditCallback
+  );
 
   app.use(helmet());
 
@@ -21,19 +26,18 @@ module.exports = () => {
     })
   );
 
-  app.use(
-    express.json({
+  app.use((req, res, next) => {
+    if (req.originalUrl === "/api/xendit-callback") {
+      return express.json({ limit: "10kb" })(req, res, next);
+    }
+    return express.json({
       limit: "10kb",
       verify: (req, res, buf) => {
-        try {
-          JSON.parse(buf);
-        } catch (err) {
-          logger.error("Invalid JSON received");
-          throw new Error("Invalid JSON format");
-        }
+        JSON.parse(buf);
       },
-    })
-  );
+    })(req, res, next);
+  });
+
 
   app.use(express.urlencoded({ extended: true }));
 
