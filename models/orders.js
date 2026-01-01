@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       id: { type: DataTypes.UUID, primaryKey: true },
       code_order: DataTypes.STRING,
-      customer_user_id: DataTypes.UUID,
+      customer_id: DataTypes.UUID,
       customer_name: DataTypes.STRING,
       customer_email: DataTypes.STRING,
       customer_phone: DataTypes.STRING,
@@ -26,9 +26,10 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Order.associate = (models) => {
-    Order.hasMany(models.OrderItem, { foreignKey: "order_id" });
-    Order.hasMany(models.Payment, { foreignKey: "order_id" });
-    Order.hasMany(models.Ticket, { foreignKey: "order_id" });
+    Order.hasMany(models.OrderItem, { foreignKey: "order_id", as: "order_items" });
+    Order.hasMany(models.Payment, { foreignKey: "order_id", as: "payments" });
+    Order.hasMany(models.Ticket, { foreignKey: "order_id", as: "tickets" });
+    Order.belongsTo(models.CustomerUser, {foreignKey: "customer_id", as: "customer"});
   };
 
   return Order;

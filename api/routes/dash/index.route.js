@@ -6,11 +6,11 @@ const creatorRoute = require("./creator.route");
 const eventRoute = require("./event.route");
 const ticket_typeRoute = require("./ticket_type.route");
 
-router.use("/users", apikey, jwtkey, userRoute);
-router.use("/kategoris", apikey, jwtkey, kategoriRoute);
-router.use("/regions", apikey, jwtkey, regionRoute);
-router.use("/creators", apikey, jwtkey, creatorRoute);
-router.use("/events", apikey, jwtkey, eventRoute);
-router.use("/ticket-types", apikey, jwtkey, ticket_typeRoute);
+router.use("/users", userRoute);
+router.use("/kategoris", kategoriRoute);
+router.use("/regions", regionRoute);
+router.use("/creators", creatorRoute);
+router.use("/events", eventRoute);
+router.use("/ticket-types", ticket_typeRoute);
 
 module.exports = router;

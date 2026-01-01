@@ -1,7 +1,6 @@
 // /loaders/sequelize.js
 const db = require("../models");
 const logger = require("../config/logger");
-
 module.exports = async () => {
   try {
     await db.sequelize.authenticate();

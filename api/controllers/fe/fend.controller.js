@@ -1,6 +1,11 @@
 const service = require("../../services/fe/fend.service");
 
 module.exports = {
+
+    async homeAll(req, res) {
+        res.json({ success: true, message: "Home data retrieved", data: await service.homeAll() });
+    },
+
     async kategoriAll(req, res) {
         res.json({ success: true, message: "Kategori retrieved", data: await service.kategoriAll() });
     },

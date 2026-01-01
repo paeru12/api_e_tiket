@@ -1,6 +1,40 @@
 const { Kategori, Region, Event, Creator, TicketType } = require("../../../models");
 
 module.exports = {
+
+    async homeAll() {
+        const event = await Event.findAll({
+            where: { status: ["published", "ended"] },
+            order: [["created_at", "DESC"]],
+            limit: 10,
+            attributes: [
+                "id",
+                "name",
+                "slug",
+                "date_start",
+                "image",
+                "status",
+                "lowest_price",
+            ],
+            include: [
+                {
+                    model: Region,
+                    attributes: ["name", "slug"],
+                    as: "regions",
+                }
+            ],
+            group: [
+                "Event.id",
+                "regions.id"
+            ]
+        });
+
+        const kategori = await Kategori.findAll({ order: [["created_at", "DESC"]], limit: 8 });
+        const region = await Region.findAll({ order: [["created_at", "DESC"]], limit: 8 });
+
+        return { event, kategori, region };
+    },
+
     async kategoriAll() {
         return await Kategori.findAll({ order: [["created_at", "DESC"]], limit: 8 });
     },
@@ -60,7 +94,7 @@ module.exports = {
             limit: 10,
             attributes: [
                 "id",
-                "name", 
+                "name",
                 "slug",
                 "date_start",
                 "image",
@@ -147,7 +181,7 @@ module.exports = {
                     as: "ticket_types",
                 },
             ],
-            attributes: ["id", "name", "slug", "date_start", "time_start", "time_end", "image", "status" ],
+            attributes: ["id", "name", "slug", "date_start", "time_start", "time_end", "image", "status"],
         });
     }
 

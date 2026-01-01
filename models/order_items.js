@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       quantity: DataTypes.BIGINT,
       unit_price: DataTypes.DECIMAL,
       total_price: DataTypes.DECIMAL,
+      attendees: DataTypes.JSON,
     },
     {
       tableName: "order_items",

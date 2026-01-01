@@ -52,6 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     Event.belongsTo(models.Kategori, { foreignKey: "kategori_id", as: "kategoris" });
     Event.belongsTo(models.User, { foreignKey: "user_id", as: "users" });
     Event.hasMany(models.TicketType, { foreignKey: "event_id", as: "ticket_types" });
+    Event.hasMany(models.Order, {foreignKey: "event_id", as: "orders" });
   };
 
   return Event;

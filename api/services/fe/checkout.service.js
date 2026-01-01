@@ -1,90 +1,112 @@
-const { Order, OrderItem, TicketType, CustomerUser } = require("../../../models");
-const { Op } = require("sequelize");
+const {
+  sequelize,
+  Order,
+  OrderItem,
+  TicketType,
+  CustomerUser
+} = require("../../../models");
 const { v4: uuid } = require("uuid");
 
 module.exports = {
-  async checkout(data) {
-    const {
-      customer_name,
-      customer_email,
-      customer_phone,
-      type_identity,
-      no_identity,
-      items, // [{ ticket_type_id, quantity }]
-    } = data;
+  async checkout(payload) {
+    const trx = await sequelize.transaction();
 
-    if (!items || !Array.isArray(items) || items.length === 0)
-      throw new Error("Items required");
+    try {
+      const { customer, items } = payload;
 
-    // 🔍 find or create customer
-    let customer = await CustomerUser.findOne({
-      where: { email: customer_email },
-    });
+      if (!items || !items.length) {
+        throw new Error("Items required");
+      }
 
-    if (!customer) {
-      customer = await CustomerUser.create({
-        email: customer_email,
-        full_name: customer_name,
-        phone: customer_phone,
+      for (const item of items) {
+        if (!item.attendees || item.attendees.length !== item.quantity) {
+          throw new Error("Attendees count must match quantity");
+        }
+      }
+
+      // find / create customer
+      let customerUser = await CustomerUser.findOne({
+        where: { email: customer.email },
+        transaction: trx
       });
-    }
 
-    // START CHECKOUT PROCESS
-    let totalAmount = 0;
+      if (!customerUser) {
+        customerUser = await CustomerUser.create({
+          full_name: customer.full_name,
+          email: customer.email,
+          phone: customer.phone
+        }, { transaction: trx });
+      }
 
-    for (const item of items) {
-      const ticketType = await TicketType.findByPk(item.ticket_type_id);
-      if (!ticketType) throw new Error("Ticket type not found");
+      let totalAmount = 0;
 
-      const available =
-        ticketType.total_stock -
-        ticketType.ticket_sold -
-        ticketType.reserved_stock;
+      // LOCK STOCK
+      for (const item of items) {
+        const ticketType = await TicketType.findByPk(item.ticket_type_id, {
+          transaction: trx,
+          lock: trx.LOCK.UPDATE
+        });
 
-      if (available < item.quantity)
-        throw new Error(`Not enough stock for ${ticketType.name}`);
+        if (!ticketType) throw new Error("Ticket type not found");
 
-      // Lock stock
-      ticketType.reserved_stock += item.quantity;
-      await ticketType.save();
+        const available =
+          ticketType.total_stock -
+          ticketType.ticket_sold -
+          ticketType.reserved_stock;
 
-      totalAmount += Number(ticketType.price) * Number(item.quantity);
-    }
+        if (available < item.quantity) {
+          throw new Error(`Stock not enough for ${ticketType.name}`);
+        }
 
-    // Create order
-    const order = await Order.create({
-      id: uuid(),
-      code_order: "INV-" + Date.now(),
-      customer_user_id: customer.id,
-      customer_name,
-      customer_email,
-      customer_phone,
-      type_identity,
-      no_identity,
-      total_amount: totalAmount,
-      status: "waiting_payment",
-      expired_at: new Date(Date.now() + 15 * 60 * 1000), // 15 min
-    });
+        ticketType.reserved_stock += item.quantity;
+        await ticketType.save({ transaction: trx });
 
-    // Create order items
-    for (const item of items) {
-      const ticketType = await TicketType.findByPk(item.ticket_type_id);
+        totalAmount += Number(ticketType.price) * item.quantity;
+      }
 
-      await OrderItem.create({
+      // CREATE ORDER
+      const order = await Order.create({
         id: uuid(),
-        order_id: order.id,
-        ticket_type_id: ticketType.id,
-        quantity: item.quantity,
-        unit_price: ticketType.price,
-        total_price: ticketType.price * item.quantity,
-      });
-    }
+        code_order: `INV-${Date.now()}`,
+        event_id: customerUser.event_id,
+        customer_id: customerUser.id,
+        customer_name: customer.full_name,
+        customer_email: customer.email,
+        customer_phone: customer.phone,
+        type_identity: customer.type_identity,
+        no_identity: customer.no_identity,
+        total_amount: totalAmount,
+        status: "waiting_payment",
+        expired_at: new Date(Date.now() + 15 * 60 * 1000)
+      }, { transaction: trx });
 
-    return {
-      order_id: order.id,
-      code_order: order.code_order,
-      total_amount: totalAmount,
-      expired_at: order.expired_at,
-    };
-  },
+      // CREATE ORDER ITEMS
+      for (const item of items) {
+        const ticketType = await TicketType.findByPk(item.ticket_type_id);
+
+        await OrderItem.create({
+          id: uuid(),
+          order_id: order.id,
+          ticket_type_id: ticketType.id,
+          quantity: item.quantity,
+          unit_price: ticketType.price,
+          total_price: ticketType.price * item.quantity,
+          attendees: JSON.stringify(item.attendees)
+        }, { transaction: trx });
+      }
+
+      await trx.commit();
+
+      return {
+        order_id: order.id,
+        code_order: order.code_order,
+        total_amount: totalAmount,
+        expired_at: order.expired_at
+      };
+
+    } catch (err) {
+      await trx.rollback();
+      throw err;
+    }
+  }
 };

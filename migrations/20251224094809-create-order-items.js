@@ -23,6 +23,7 @@ module.exports = {
       quantity: Sequelize.BIGINT,
       unit_price: Sequelize.DECIMAL(15, 2),
       total_price: Sequelize.DECIMAL(15, 2),
+      attendees: Sequelize.JSON,
 
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,

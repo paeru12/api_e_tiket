@@ -16,7 +16,7 @@ module.exports = {
         unique: true,
       },
 
-      customer_user_id: {
+      customer_id: {
         type: Sequelize.UUID,
         allowNull: true,
       },
