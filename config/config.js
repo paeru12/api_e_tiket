@@ -16,7 +16,18 @@ module.exports = {
     host: DB_HOSTNAME,
     dialect: DB_DIALECT,
 
-    timezone: "+07:00"
+    timezone: "+07:00",
+
+    dialectOptions: {
+      
+      dateStrings: true,
+      typeCast: function (field, next) {
+        if (field.type === "DATETIME" || field.type === "TIMESTAMP") {
+          return new Date(field.string() + " GMT+7");
+        }
+        return next();
+      }
+    }
   },
 
   test: {
@@ -25,8 +36,17 @@ module.exports = {
     database: DB_NAME,
     host: DB_HOSTNAME,
     dialect: DB_DIALECT,
-
     timezone: "+07:00",
+    dialectOptions: {
+      
+      dateStrings: true,
+      typeCast: function (field, next) {
+        if (field.type === "DATETIME" || field.type === "TIMESTAMP") {
+          return new Date(field.string() + " GMT+7");
+        }
+        return next();
+      }
+    }
   },
 
   production: {
@@ -35,7 +55,16 @@ module.exports = {
     database: DB_NAME,
     host: DB_HOSTNAME,
     dialect: DB_DIALECT,
-
     timezone: "+07:00",
+    dialectOptions: {
+      
+      dateStrings: true,
+      typeCast: function (field, next) {
+        if (field.type === "DATETIME" || field.type === "TIMESTAMP") {
+          return new Date(field.string() + " GMT+7");
+        }
+        return next();
+      }
+    }
   }
 };

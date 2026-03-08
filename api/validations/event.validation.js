@@ -1,44 +1,24 @@
 const Joi = require("joi");
 
 module.exports = {
-  create: Joi.object({
-    creator_id: Joi.string().uuid().required(),
-    region_id: Joi.string().uuid().required(),
-    kategori_id: Joi.string().uuid().required(),
-    user_id: Joi.string().uuid().required(),
-
-    name: Joi.string().required(),
-
-    deskripsi: Joi.string().allow("", null),
-    sk: Joi.string().allow("", null),
-
-    date_start: Joi.date().allow(null),
-    date_end: Joi.date().allow(null),
-
-    time_start: Joi.string().allow(null),
-    time_end: Joi.string().allow(null),
-
-    location: Joi.string().allow("", null),
-    map: Joi.string().allow("", null),
-
-    keywords: Joi.string().allow("", null),
-    status: Joi.string().valid("draft", "published", "ended").default("draft"),
-  }),
 
   update: Joi.object({
-    creator_id: Joi.string().uuid().optional(),
-    region_id: Joi.string().uuid().optional(),
-    kategori_id: Joi.string().uuid().optional(),
     name: Joi.string().optional(),
-    deskripsi: Joi.string().optional(),
-    sk: Joi.string().optional(),
+    kategori_id: Joi.string().uuid().optional(),
+    location: Joi.string().optional(),
+    map: Joi.string().allow("", null),
+    province: Joi.string().allow("", null),
+    district: Joi.string().allow("", null),
     date_start: Joi.date().allow(null),
     date_end: Joi.date().allow(null),
     time_start: Joi.string().allow(null),
     time_end: Joi.string().allow(null),
-    location: Joi.string().optional(),
-    map: Joi.string().optional(),
+    deskripsi: Joi.string().optional(),
+    sk: Joi.string().optional(),
     keywords: Joi.string().optional(),
     lowest_price: Joi.string().optional(),
+    timezone: Joi.string().optional(),
+    social_link: Joi.object().optional(),
+    image: Joi.string().optional(),
   }),
 };

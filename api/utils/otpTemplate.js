@@ -1,81 +1,132 @@
 // api/utils/otpTemplate.js
 function buildOtpHtml(otp, email, ttlMinutes = 10) {
   return `
-  <div style="margin:0; padding:0; background:#f5f7fa; font-family:Arial, sans-serif;">
-    <table align="center" width="100%" cellpadding="0" cellspacing="0" style="padding:20px 0;">
-      <tr>
-        <td>
-          <table align="center" width="600" cellpadding="0" cellspacing="0"
-            style="background:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+  <div style="margin:0; padding:0; background:#f6f3e9; font-family:Arial, sans-serif;">
 
+        <table align="center" width="100%" cellpadding="0" cellspacing="0" style="padding:30px 10px;">
             <tr>
-              <td style="background:#ffffff; padding:15px; text-align:center; border-bottom: 5px solid #1d39c4;">
-                <img src="https://i.ibb.co/4P9XV0C/logo.png" alt="Logo" width="80">
-              </td>
-            </tr>
+                <td>
 
-            <tr>
-              <td style="padding:30px;">
-                <h2 style="color:#333333; text-align:center; margin:0; font-size:22px; font-weight:600;">
-                  OTP Verification
-                </h2>
+                    <table align="center" width="600" cellpadding="0" cellspacing="0"
+                        style="background:#ffffff; border:4px dashed #000; box-shadow:8px 8px 0 #000;">
 
-                <p style="text-align:center; color:#555555; margin-top:10px; font-size:15px; line-height:22px;">
-                  Hai, <b>${email}</b><br>
-                  Silakan masukkan kode OTP berikut untuk verifikasi akun Anda.
-                </p>
+                        <!-- HEADER -->
+                        <tr>
+                            <td
+                                style="background:#3b82f6; padding:20px; text-align:center; border-bottom:4px solid #000;">
 
-                <div style="
-                text-align:center;
-                margin:25px 0;
-                padding:20px;
-                background:#eef3ff;
-                border-radius:10px;
-                font-size:36px;
+                                <div>
+                                    <img src="https://biodegradable-pat-doubly.ngrok-free.dev/uploads/logo/belisenang_png.png" alt="Logo" width="170">
+                                </div>
+
+                                <div style="font-size:13px; margin-top:-5px; color: #ffffff;">
+                                    Platform tiket konser, festival & event seru
+                                </div>
+
+                            </td>
+                        </tr>
+
+                        <!-- CONTENT -->
+                        <tr>
+                            <td style="padding:35px; text-align:center;">
+
+                                <h2 style="margin:0; font-size:24px; color:#000;">
+                                    Verifikasi Akun Kamu
+                                </h2>
+
+                                <p style="margin-top:10px; font-size:15px; color:#444;">
+                                    Halo <b>${email}</b>,<br>
+                                    Gunakan kode OTP berikut untuk melanjutkan proses verifikasi akun kamu.
+                                </p>
+
+
+                                <!-- OTP BOX -->
+                                <div style="
+                  margin:30px auto;
+                  width:260px;
+                  background:#fff;
+                  border:4px dashed #000;
+                  padding:18px;
+                  font-size:36px;
+                  font-weight:bold;
+                  letter-spacing:8px;
+                  color:#000;
+                  background:#fffbe6;
+                ">
+                                    ${otp}
+                                </div>
+
+
+                                <p style="font-size:13px; color:#555;">
+                                    Kode ini berlaku selama <b>${ttlMinutes} menit</b>.
+                                </p>
+
+                                <p style="font-size:13px; color:#888;">
+                                    Demi keamanan akun kamu, jangan bagikan kode ini kepada siapa pun.
+                                </p>
+
+                            </td>
+                        </tr>
+
+
+                        <!-- CTA -->
+                        <tr>
+                            <td style="padding:0 35px 30px 35px; text-align:center;">
+
+                                <a href="https://belisenang.com" style="
+                display:inline-block;
+                background:#ff3b30;
+                color:white;
+                text-decoration:none;
+                padding:14px 24px;
                 font-weight:bold;
-                letter-spacing:7px;
-                color:#1d39c4;">
-                  ${otp}
-                </div>
+                border:3px solid #000;
+                box-shadow:4px 4px 0 #000;
+                font-size:14px;
+                ">
+                                    Jelajahi Event Seru →
+                                </a>
 
-                <p style="text-align:center; color:#777; font-size:13px; margin-top:10px; line-height:20px;">
-                  Kode OTP ini berlaku selama <b>${ttlMinutes} menit</b>.<br>
-                  Jangan pernah membagikan kode kepada siapa pun demi keamanan akun Anda.
-                </p>
-              </td>
+                            </td>
+                        </tr>
+
+
+                        <!-- FOOTER -->
+                        <tr>
+                            <td style="background:#000; color:#fff; padding:25px; text-align:center;">
+
+                                <div style="font-size:13px; margin-bottom:10px;">
+                                    Butuh bantuan?
+                                </div>
+
+                                <div style="font-size:13px;">
+
+                                    <a href="mailto:cs@belisenang.com" style="color:#FFD400; text-decoration:none;">
+                                        cs@belisenang.com
+                                    </a>
+
+                                    &nbsp;&nbsp;|&nbsp;&nbsp;
+
+                                    <a href="https://wa.me/6281232662607" style="color:#FFD400; text-decoration:none;">
+                                        WhatsApp Support
+                                    </a>
+
+                                </div>
+
+                                <div style="margin-top:15px; font-size:11px; color:#bbb;">
+                                    © 2026 BELISENANG — Semua Hak Dilindungi
+                                </div>
+
+                            </td>
+                        </tr>
+
+                    </table>
+
+                </td>
             </tr>
+        </table>
 
-            <tr>
-              <td style="background:#1d39c4; padding:30px; text-align:center; color:#ffffff;">
-                <div style=" font-size:13px; line-height:10px;">
-
-                  <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
-                      <a href="mailto:cs@nontonkonser.com" target="_blank" style="color:white; text-decoration:none; display: flex; align-items: center;">
-                        <img
-                          src="https://png.pngtree.com/png-clipart/20191120/original/pngtree-email-icon-png-image_5065641.jpg"
-                          width="22" style="margin: 0 5px;">
-                        cs@nontonkonser.com</a>
-                      <a href="https://wa.me/6281232662607?text=Halo Nontonkonser" target="_blank" style="margin:0 8px; color:white; text-decoration:none; display: flex; align-items: center;">
-                        <img
-                          src="https://img.freepik.com/premium-psd/whatsapp-icon-isolated-white-background-phone-bubble-chat-icon-social-media-app-button-logo_989822-4699.jpg?semt=ais_se_enriched&w=740&q=80"
-                          width="22" style="margin: 0 5px;">
-                        +62 821-0000-0000
-                      </a>
-                  </div>
-                </div>
-
-                <p
-                  style="margin-top:15px; padding-top: 10px; font-size:12px; color:#d9d9d9; border-top: 2px solid #ffffff;">
-                  © 2025 Nontonkonser Hak Cipta Dilindungi.
-                </p>
-              </td>
-            </tr>
-
-          </table>
-        </td>
-      </tr>
-    </table>
-  </div>
+    </div>
 `;
 }
 

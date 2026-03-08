@@ -1,3 +1,4 @@
+"use strict";
 module.exports = (sequelize, DataTypes) => {
   const Creator = sequelize.define(
     "Creator",
@@ -7,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      user_id: DataTypes.UUID,
+      owner_user_id: DataTypes.UUID,
       name: {
         type: DataTypes.STRING(150),
         allowNull: false,
@@ -22,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
+
+      social_link: {
+        type: DataTypes.JSON,
+        allowNull: true
+      }
     },
     {
       tableName: "creators",
@@ -33,6 +39,42 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     }
   );
+
+  Creator.associate = (models) => {
+    // Owner
+    Creator.belongsTo(models.User, {
+      foreignKey: 'owner_user_id',
+      as: 'owner'
+    });
+
+    // Members inside this creator
+    Creator.hasMany(models.CreatorUserMember, {
+      foreignKey: 'creator_id',
+      as: 'members'
+    });
+
+    //event
+    Creator.hasMany(models.Event, {
+      foreignKey: 'creator_id',
+      as: 'events'
+    });
+
+    Creator.hasOne(models.CreatorFinanceSettings, {
+      foreignKey: "creator_id",
+      as: "financial"
+    });
+
+    Creator.hasOne(models.CreatorBankAccounts, {
+      foreignKey: "creator_id",
+      as: "bank"
+    });
+
+    Creator.hasOne(models.CreatorDocuments, {
+      foreignKey: "creator_id",
+      as: "document"
+    });
+
+  };
 
   return Creator;
 };

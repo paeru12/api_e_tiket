@@ -1,63 +1,104 @@
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
-const rateLimit = require("express-rate-limit");
 const hpp = require("hpp");
 const routes = require("../api/routes");
 const logger = require("../config/logger");
 const errorHandler = require("../api/middlewares/error.middleware");
 const sanitize = require('../api/middlewares/xss.middleware');
 const path = require("path");
+const cookieParser = require("cookie-parser");
+const csrf = require("csurf");
 
 module.exports = () => {
   const app = express();
-  app.post(
-    "/api/xendit-callback",
-    express.json({ limit: "1mb" }),
-    require("../api/controllers/fe/paymentCallback.controller").xenditCallback
-  );
-
-  app.use(helmet());
+  app.set("trust proxy", 1);
+  app.use(cookieParser());
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  const allowedOrigins = [
+    "http://localhost:4000",
+    "https://dash-belisenang.vercel.app",
+  ];
 
   app.use(
     cors({
-      origin: process.env.CORS_ORIGIN?.split(",") || "*",
+      origin: [
+        "http://localhost:4000",
+        "https://dash-belisenang.vercel.app",
+      ],
       credentials: true,
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "x-api-key"
+      ],
     })
   );
 
-  app.use((req, res, next) => {
-    if (req.originalUrl === "/api/xendit-callback") {
-      return express.json({ limit: "10kb" })(req, res, next);
-    }
-    return express.json({
-      limit: "10kb",
-      verify: (req, res, buf) => {
-        JSON.parse(buf);
-      },
-    })(req, res, next);
-  });
+  // app.use(
+  //   cors({
+  //     origin: (origin, callback) => {
+  //       if (!origin || allowedOrigins === "*" || allowedOrigins.includes(origin)) {
+  //         callback(null, true);
+  //       } else {
+  //         callback(new Error("CORS not allowed"));
+  //       }
+  //     },
+  //     credentials: true,
+  //     allowedHeaders: [
+  //       "Content-Type",
+  //       "Authorization",
+  //       "x-api-key",
+  //     ],
+  //     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  //   })
+  // );
 
-
-  app.use(express.urlencoded({ extended: true }));
 
   app.use(sanitize);
   app.use(hpp());
-
-  const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
-    message: "Too many requests, try again later",
-  });
-  app.use(limiter);
 
   app.use((req, res, next) => {
     logger.info(`${req.method} ${req.originalUrl}`);
     next();
   });
 
+  app.use(
+    helmet({
+      crossOriginResourcePolicy: {
+        policy: "cross-origin",
+      },
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          "img-src": [
+            "'self'",
+            "data:",
+            "blob:",
+            "http://localhost:3000",
+            "http://localhost:3500",
+            "https://biodegradable-pat-doubly.ngrok-free.dev",
+            "https://*.googleusercontent.com",
+          ],
+        },
+      },
+    })
+  );
   app.use("/api", routes);
-  app.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
+  app.use(
+    "/uploads",
+    (req, res, next) => {
+      res.removeHeader("Cross-Origin-Resource-Policy");
+      res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+      res.setHeader("Cache-Control", "public, max-age=31536000");
+      next();
+    },
+    express.static(path.join(__dirname, "../public/uploads"))
+  );
+  // Load Swagger docs
+  // swaggerLoader(app);
 
   app.use(errorHandler);
 

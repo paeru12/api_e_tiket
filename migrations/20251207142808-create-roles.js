@@ -21,6 +21,11 @@ module.exports = {
         allowNull: true,
       },
 
+      role_scope: {
+        type: Sequelize.ENUM("global", "creator"),
+        allowNull: false,
+      },
+
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,

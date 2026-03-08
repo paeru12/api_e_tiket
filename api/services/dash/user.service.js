@@ -1,29 +1,73 @@
-const { User, Role, UserRole } = require("../../../models");
+const { User, Role, UserRole, sequelize } = require("../../../models");
 const bcrypt = require("../../../utils/bcrypt");
 const deleteImage = require("../../utils/deleteImage");
-
+const { Op } = require("sequelize");
+const ROLES = require("../../config/role");
 module.exports = {
-  async getAll() {
-    return await User.findAll({
-      include: [{ model: Role, through: { attributes: [] } }],
-      attributes: { exclude: ["password_hash"] }
+
+  async getPagination({ page = 1, perPage = 10, search = "" }) {
+    const limit = parseInt(perPage);
+    const offset = (page - 1) * limit;
+    const where = {};
+    if (search) {
+            where["$user.full_name$"] = { [Op.like]: `%${search}%` };
+            where["$user.email$"] = { [Op.like]: `%${search}%` };
+            where["$user.phone$"] = { [Op.like]: `%${search}%` };
+        }
+    const { rows, count } = await UserRole.findAndCountAll({
+      where,
+      limit,
+      offset,
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: ["full_name", "email", "phone","image", "is_active"],
+          paranoid: true,
+          required: true
+        },
+        {
+          model: Role,
+          as: "role",
+          attributes: ["name"]
+        },
+      ],
+      order: [["created_at", "ASC"]]
     });
+
+    return {
+      rows,
+      count,
+      page,
+      perPage: limit,
+      totalPages: Math.ceil(count / limit)
+    };
   },
 
   async getOne(id) {
     const user = await User.findByPk(id, {
-      include: [{ model: Role, through: { attributes: [] } }],
+      include: [{ model: Role, as: "roles", through: { attributes: [] } }],
       attributes: { exclude: ["password_hash"] }
     });
     if (!user) throw new Error("User not found");
-    return user;
+    const img = user.image ? process.env.MEDIA_URL_AUTH + user.image : null;
+
+    return {
+      id: user.id,
+      email: user.email,
+      full_name: user.full_name,
+      phone: user.phone,
+      image: img,
+      is_active: user.is_active,
+      role: user.roles[0]?.name || null
+    };
   },
 
-  async create(data) {
-    const role = await Role.findByPk(data.role_id);
-    if (!role) throw new Error("Role not found");
+  async createAdmin(data) {
+    
 
-    const hashed = await bcrypt.hash(data.password);
+    salt = process.env.BCRYPT_SALT || 10;
+    const hashed = await bcrypt.hash(data.password, salt);
 
     const user = await User.create({
       full_name: data.full_name,
@@ -33,17 +77,23 @@ module.exports = {
       image: data.image || null
     });
 
+    let role_id = null;
+    if (data.role === "SYSTEM_ADMIN") {
+      role_id = ROLES.SYSTEM_ADMIN_ID
+    } else if (data.role === "CONTENT_WRITER") {
+      role_id = ROLES.CONTENT_WRITER_ID
+    }
+
     await UserRole.create({
       user_id: user.id,
-      role_id: role.id,
+      role_id,
       created_at: new Date()
     });
 
     return await User.findByPk(user.id, {
-      include: [{ model: Role, through: { attributes: [] } }],
+      include: [{ model: Role, as: "roles", through: { attributes: [] } }],
       attributes: { exclude: ["password_hash"] }
     });
-
   },
 
   async update(id, data) {
@@ -58,6 +108,24 @@ module.exports = {
     return user;
   },
 
+  async updateGlobalPassword(id, data) {
+    const user = await User.findByPk(id);
+    if (!user) throw new Error("User not found");
+
+    const isMatch = await bcrypt.compare(data.current_password, user.password_hash);
+    if (!isMatch) {
+      throw new Error("Current password is incorrect");
+    }
+    if (data.password !== data.confirm_password) {
+      throw new Error("Password and confirm password do not match");
+    }
+
+    const saltRounds = parseInt(process.env.BCRYPT_SALT) || 10;
+    const password_hash = await bcrypt.hash(data.password, saltRounds);
+    await user.update({ password_hash });
+    return { message: "Password updated successfully" };
+  },
+
   async remove(id) {
     const user = await User.findByPk(id);
     if (!user) throw new Error("User not found");
@@ -70,25 +138,4 @@ module.exports = {
     return { message: "User deleted" };
   },
 
-  async assignRole(id, data) {
-    const user = await User.findByPk(id);
-    if (!user) throw new Error("User not found");
-
-    const role = await Role.findByPk(data.role_id);
-    if (!role) throw new Error("Role not found");
-
-    const exists = await UserRole.findOne({
-      where: { user_id: id, role_id: data.role_id }
-    });
-
-    if (exists) throw new Error("User already has this role");
-
-    await UserRole.create({
-      user_id: id,
-      role_id: data.role_id,
-      created_at: new Date()
-    });
-
-    return { message: "Role assigned" };
-  }
-};
+}; 

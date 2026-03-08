@@ -2,8 +2,32 @@ const service = require("../../services/dash/kategori.service");
 const processImage = require("../../utils/imageProcessor");
 
 module.exports = {
+
+    async getPagination(req, res) {
+        const { page = 1, perPage = 10, search = "" } = req.query;
+
+        const result = await service.getPagination({
+            page,
+            perPage,
+            search,
+        });
+
+        res.json({
+            success: true,
+            message: "Kategori retrieved",
+            media: process.env.MEDIA_URL,
+            data: result.rows,
+            meta: {
+                page: Number(page),
+                perPage: Number(perPage),
+                totalItems: result.count,
+                totalPages: result.totalPages,
+            },
+        });
+    },
+
     async index(req, res) {
-        res.json({ success: true, message: "Kategori retrieved", data: await service.getAll() });
+        res.json({ success: true, message: "Kategori retrieved", media: process.env.MEDIA_URL, data: await service.getAll() });
     },
 
     async show(req, res) {
@@ -12,7 +36,7 @@ module.exports = {
             return res.status(404).json({ success: false, message: "Kategori not found" });
         }
         res.json({ success: true, message: "Kategori found", data: data });
-    }, 
+    },
 
     async store(req, res) {
         try {
@@ -21,9 +45,9 @@ module.exports = {
             if (req.file) {
                 imageUrl = await processImage(req.file.buffer, "kategoris");
             }
-
+            const userId = req.user.id;
             const kategori = await service.create({
-                user_id: req.body.user_id,
+                user_id: userId,
                 name: req.body.name,
                 description: req.body.description,
                 keywords: req.body.keywords,

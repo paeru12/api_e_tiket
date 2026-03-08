@@ -11,32 +11,117 @@ module.exports = {
     },
 
     async getEventByKategoriSlug(req, res) {
-        res.json({ success: true, message: "Event retrieved", data: await service.getEventByKategoriSlug(req.params.slug) });
-    },
+        try {
 
-    async regionAll(req, res) {
-        res.json({ success: true, message: "Region retrieved", data: await service.regionAll() });
-    },
+            const page = parseInt(req.query.page) || 1;
 
-    async getEventByRegionSlug(req, res) {
-        res.json({ success: true, message: "Event retrieved", data: await service.getEventByRegionSlug(req.params.slug) });
+            const result = await service.getEventByKategoriSlug({
+                slug: req.params.slug,
+                page
+            });
+
+            res.json({
+                message: "success",
+                data: result
+            });
+
+        } catch (err) {
+            res.status(500).json({
+                message: "Failed retrieve event",
+                error: err.message
+            });
+        }
     },
 
     async eventAll(req, res) {
-        res.json({ success: true, message: "Event retrieved", data: await service.eventAll() });
+        try {
+            const page = parseInt(req.query.page) || 1;
+
+            const result = await service.eventAll({ page });
+
+            res.json({
+                message: "success",
+                data: result
+            });
+
+        } catch (err) {
+            res.status(500).json({
+                message: "Failed retrieve event",
+                error: err.message
+            });
+        }
     },
 
     async getOneEvent(req, res) {
-        res.json({ success: true, message: "Event retrieved", data: await service.getOneEvent(req.params.slug) });
+        try {
+
+            const data = await service.getOneEvent(req.params.slug);
+
+            res.json({
+                message: "success",
+                data
+            });
+
+        } catch (err) {
+            res.status(500).json({
+                message: "Failed retrieve event",
+                error: err.message
+            });
+        }
     },
 
     async getTicketEvent(req, res) {
-        res.json({ success: true, message: "Ticket retrieved", data: await service.getTicketEvent(req.params.slug) });
-    }
+        try {
 
-    // async bannerAll(req, res) {
-    //     res.json({ success: true, message: "Banner retrieved", data: await service.bannerAll() });
-    // }
+            const data = await service.getTicketEvent(req.params.slug);
+
+            res.json({
+                message: "success",
+                data
+            });
+
+        } catch (err) {
+            res.status(500).json({
+                message: "Failed retrieve ticket",
+                error: err.message
+            });
+        }
+    },
+
+    async bannerAll(req, res) {
+        res.json({ success: true, message: "Banner retrieved", data: await service.bannerAll() });
+    },
+
+    // search 
+    async searchEvents(req, res) {
+
+        try {
+
+            const result = await service.searchEvents({
+                page: parseInt(req.query.page) || 1,
+                search: req.query.search,
+                category: req.query.category,
+                city: req.query.city,
+                province: req.query.province,
+                status: req.query.status,
+                sort: req.query.sort
+            });
+
+            res.json({
+                message: "success",
+                data: result
+            });
+
+        } catch (err) {
+
+            res.status(500).json({
+                message: "Failed retrieve events",
+                error: err.message
+            });
+
+        }
+
+    }
 
 
 }; 

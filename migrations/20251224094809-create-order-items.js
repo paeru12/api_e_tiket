@@ -21,8 +21,18 @@ module.exports = {
       },
 
       quantity: Sequelize.BIGINT,
-      unit_price: Sequelize.DECIMAL(15, 2),
-      total_price: Sequelize.DECIMAL(15, 2),
+
+      // ====== FINANCE PER ITEM ======
+      ticket_price: Sequelize.DECIMAL(15, 2),
+      admin_fee_amount: Sequelize.DECIMAL(15, 2),
+      tax_amount: Sequelize.DECIMAL(15, 2),
+
+      // total bayar buyer (untuk item ini)
+      buyer_pay_amount: Sequelize.DECIMAL(15, 2),
+
+      // pendapatan organizer dari item ini
+      organizer_net: Sequelize.DECIMAL(15, 2),
+
       attendees: Sequelize.JSON,
 
       created_at: Sequelize.DATE,

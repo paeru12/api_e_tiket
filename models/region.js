@@ -18,5 +18,12 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: "updated_at"
   });
 
+  Region.associate = (models) => {
+    Region.belongsTo(models.User, {
+      foreignKey: "user_id",
+      as: "users"
+    });
+  };
+  
   return Region;
 };

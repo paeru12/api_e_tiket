@@ -27,7 +27,18 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(models.Role, {
       through: 'user_roles',
       foreignKey: 'user_id',
-      otherKey: 'role_id'
+      otherKey: 'role_id',
+      as: 'roles'
+    });
+    User.hasMany(models.CreatorUserMember, {
+      foreignKey: 'user_id',
+      as: 'creator_memberships'
+    });
+
+    // If user is creator owner
+    User.hasMany(models.Creator, {
+      foreignKey: 'owner_user_id',
+      as: 'owned_creators'
     });
   };
 

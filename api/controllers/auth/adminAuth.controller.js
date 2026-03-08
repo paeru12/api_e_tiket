@@ -1,39 +1,59 @@
 const service = require("../../services/auth/adminAuth.service");
+const cookieConfig = require("../../config/cookie");
 
 module.exports = {
   async login(req, res) {
-    try {
-      const { email, password } = req.body;
-      const result = await service.login(email, password, req);
+    const result = await service.login(req.body.email, req.body.password, req);
 
-      res.json({
+    res
+      .cookie("access_token", result.accessToken, cookieConfig.accessCookie)
+      .cookie("refresh_token", result.refreshToken, cookieConfig.refreshCookie)
+      .json({
         status: true,
-        accessToken: result.accessToken,
-        refreshToken: result.refreshToken,
-        data: result.user
+        user: result.user,
       });
-    } catch (err) {
-      res.status(401).json({ status: false, message: err.message });
-    }
   },
 
   async refresh(req, res) {
+    const refreshToken = req.cookies.refresh_token;
+
+    if (!refreshToken) {
+      return res.status(401).json({
+        status: false,
+        code: "NO_REFRESH",
+      });
+    }
+
     try {
-      const { refreshToken } = req.body;
       const result = await service.refresh(refreshToken);
-      res.json({ status: true, accessToken: result.accessToken });
-    } catch {
-      res.status(401).json({ status: false, message: "Invalid refresh token" });
+
+      res
+        .cookie("access_token", result.accessToken, cookieConfig.accessCookie)
+        .cookie("refresh_token", result.refreshToken, cookieConfig.refreshCookie)
+        .json({ status: true });
+
+    } catch (err) {
+      return res.status(401).json({
+        status: false,
+        code: "REFRESH_FAILED",
+      });
     }
   },
 
   async logout(req, res) {
-    const { refreshToken } = req.body;
-    await service.logout(refreshToken);
+    try {
+      const token = req.cookies.refresh_token;
+      if (token) await service.logout(token);
 
-    res.json({
-      status: true,
-      message: "Logged out"
-    });
-  }
+      res
+        .clearCookie("access_token")
+        .clearCookie("refresh_token")
+        .json({
+          status: true,
+          message: "Logged out",
+        });
+    } catch {
+      res.status(200).json({ status: true });
+    }
+  },
 };

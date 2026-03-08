@@ -1,18 +1,44 @@
 const jwt = require("../../utils/jwt");
 
-module.exports = function auth(req, res, next) {
-  const authHeader = req.headers.authorization;
-
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ status: false, message: "Unauthorized" });
-  }
-
+module.exports = (req, res, next) => {
   try {
-    const token = authHeader.split(" ")[1];
+    const token = req.cookies?.access_token;
+
+    if (!token) {
+      return res.status(401).json({
+        status: false,
+        code: "NO_TOKEN",
+        message: "Unauthenticated",
+      });
+    }
+
     const decoded = jwt.verifyAccess(token);
-    req.user = decoded; // { id, roles }
+
+    // WAJIB: minimal payload valid
+    if (!decoded?.id || !decoded?.email) {
+      return res.status(401).json({
+        status: false,
+        code: "INVALID_TOKEN",
+        message: "Unauthenticated",
+      });
+    }
+
+    req.user = decoded;
+    req.tokenExp = decoded.exp;
     next();
   } catch (err) {
-    return res.status(401).json({ status: false, message: "Invalid token" });
+    if (err.name === "TokenExpiredError") {
+      return res.status(401).json({
+        status: false,
+        code: "TOKEN_EXPIRED",
+        message: "Access token expired",
+      });
+    }
+
+    return res.status(401).json({
+      status: false,
+      code: "INVALID_TOKEN",
+      message: "Unauthenticated",
+    });
   }
 };

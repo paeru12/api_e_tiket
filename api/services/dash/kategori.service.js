@@ -1,4 +1,4 @@
-const { Kategori } = require("../../../models");
+const { Kategori, User } = require("../../../models");
 const deleteImage = require("../../utils/deleteImage");
 const slugify = require("../../utils/slugify");
 const { Op } = require("sequelize");
@@ -24,8 +24,48 @@ async function generateUniqueSlug(name, excludeId = null) {
 }
 
 module.exports = {
+  async getPagination({ page = 1, perPage = 10, search = "" }) {
+    const limit = parseInt(perPage);
+    const offset = (page - 1) * limit;
+
+    const where = search
+      ? {
+          [Op.or]: [
+            { name: { [Op.like]: `%${search}%` } },
+            { keywords: { [Op.like]: `%${search}%` } },
+          ],
+        }
+      : {};
+
+    const { rows, count } = await Kategori.findAndCountAll({
+      where,
+      limit,
+      offset,
+      order: [["created_at", "DESC"]],
+      include: {
+        model: User,
+        as: "users",
+        attributes: ["full_name"],
+      },
+    });
+
+    return {
+      rows,
+      count,
+      page,
+      perPage: limit,
+      totalPages: Math.ceil(count / limit),
+    };
+  },
+
   async getAll() {
-    return await Kategori.findAll({ order: [["created_at", "DESC"]] });
+    return await Kategori.findAll({ 
+      order: [["created_at", "DESC"]], 
+      include: {
+        model: User,
+        as: "users",
+        attributes: ["full_name"]
+      } });
   },
 
   async getOne(id) {
@@ -36,7 +76,7 @@ module.exports = {
 
   async create(data) {
     const slug = await generateUniqueSlug(data.name);
-
+ 
     return await Kategori.create({
       user_id: data.user_id,
       name: data.name,

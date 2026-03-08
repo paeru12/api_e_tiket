@@ -10,7 +10,7 @@ module.exports = {
         primaryKey: true,
       },
 
-      user_id: {
+      owner_user_id: {
         type: Sequelize.UUID,
         allowNull: false
       },
@@ -26,6 +26,10 @@ module.exports = {
 
       image: {
         type: Sequelize.TEXT,
+        allowNull: true,
+      },
+      social_link: {
+        type: Sequelize.JSON,
         allowNull: true,
       },
 

@@ -1,15 +1,6 @@
 const Joi = require("joi");
 
 module.exports = {
-  create: Joi.object({
-    email: Joi.string().email().required(),
-    password: Joi.string().min(6).required(),
-    full_name: Joi.string().required(),
-    phone: Joi.string().optional(),
-    image: Joi.string().optional(),
-    role_id: Joi.string().uuid().required()
-  }),
-
   update: Joi.object({
     full_name: Joi.string().optional(),
     phone: Joi.string().optional(),
@@ -17,20 +8,29 @@ module.exports = {
     is_active: Joi.boolean().truthy("1").falsy("0").optional(),
   }),
 
-  assignRole: Joi.object({
-    role_id: Joi.string().uuid().required(),
-  }),
-
   login: Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
 
-  register: Joi.object({
-    email: Joi.string().email().required(),
-    password: Joi.string().min(6).required(),
+  create: Joi.object({
+    role: Joi.string().valid(
+      "SYSTEM_ADMIN",
+      "CONTENT_WRITER"
+    ).required(),
     full_name: Joi.string().required(),
+    email: Joi.string().email().required(),
     phone: Joi.string().optional(),
-    image: Joi.string().optional(),
-  })
+    password: Joi.string().min(6).required(),
+    confirm_password: Joi.string().valid(Joi.ref('password')).required()
+      .messages({ "any.only": "Password confirmation does not match" }),
+  }),
+
+  updateGlobalPassword: Joi.object({
+    current_password: Joi.string().min(6).required(),
+    password: Joi.string().min(6).required(),
+    confirm_password: Joi.string().valid(Joi.ref('password')).required()
+      .messages({ "any.only": "Password confirmation does not match" }),
+  }),
+
 };

@@ -159,7 +159,7 @@ module.exports = {
     if (!customer) {
       customer = await CustomerUser.create({
         email,
-        full_name: null,
+        full_name: email.substring(0, email.indexOf("@")),
         phone: null,
         photo_url: null
       });

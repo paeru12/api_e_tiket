@@ -2,20 +2,24 @@ const service = require("../../services/dash/user.service");
 const processImage = require("../../utils/imageProcessor");
 
 module.exports = {
-  async getAll(req, res) {
-    try {
-      const data = await service.getAll();
-      res.json({
-        success: true,
-        message: "Users retrieved",
-        data
-      });
-    } catch (err) {
-      res.status(500).json({
-        success: false,
-        message: err.message
-      });
-    }
+
+  async pagination(req, res) {
+    const { page = 1, perPage = 10, search = "" } = req.query;
+
+    const result = await service.getPagination({ page, perPage, search });
+
+    res.json({
+      success: true,
+      message: "Users retrieved",
+      media: process.env.MEDIA_URL,
+      data: result.rows,
+      meta: {
+        page: Number(page),
+        perPage: Number(perPage),
+        totalItems: result.count,
+        totalPages: result.totalPages
+      }
+    });
   },
 
   async getOne(req, res) {
@@ -41,24 +45,19 @@ module.exports = {
     }
   },
 
-  async create(req, res) {
+  async createAdmin(req, res) {
     try {
       const data = { ...req.body };
 
-      // Upload avatar jika ada
       if (req.file) {
-        data.image = await processImage(
-          req.file.buffer,
-          "users",
-          { maxWidth: 400, maxSize: 200 * 1024 }
-        );
+        data.image = await processImage(req.file.buffer, "users");
       }
 
-      const user = await service.create(data);
+      const user = await service.createAdmin(data);
 
       res.status(201).json({
         success: true,
-        message: "User created",
+        message: "User event admin created",
         data: user
       });
     } catch (err) {
@@ -81,7 +80,6 @@ module.exports = {
 
       const data = {
         full_name: req.body.full_name,
-        email: req.body.email,
         phone: req.body.phone,
         is_active: req.body.is_active
       };
@@ -101,6 +99,22 @@ module.exports = {
         success: true,
         message: "User updated",
         data: user
+      });
+    } catch (err) {
+      res.status(400).json({
+        success: false,
+        message: err.message
+      });
+    }
+  },
+
+  async updateGlobalPassword(req, res) {
+    try {
+      const result = await service.updateGlobalPassword(req.params.id, req.body);
+      res.json({
+        success: true,
+        message: "password updated successfully",
+        data: result
       });
     } catch (err) {
       res.status(400).json({
@@ -135,20 +149,4 @@ module.exports = {
     }
   },
 
-  async assignRole(req, res) {
-    try {
-      const result = await service.assignRole(req.params.id, req.body);
-
-      res.json({
-        success: true,
-        message: "Role assigned to user",
-        data: result
-      });
-    } catch (err) {
-      res.status(400).json({
-        success: false,
-        message: err.message
-      });
-    }
-  }
 };

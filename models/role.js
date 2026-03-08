@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true
     },
     name: DataTypes.STRING,
-    description: DataTypes.STRING
+    description: DataTypes.STRING,
+    role_scope: DataTypes.ENUM("global", "creator")
   }, {
     tableName: 'roles',
     underscored: true
@@ -19,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
       through: 'user_roles',
       foreignKey: 'role_id',
       otherKey: 'user_id'
+    });
+
+    Role.hasMany(models.CreatorUserMember, {
+      foreignKey: 'role_id',
+      as: 'creator_memberships'
     });
   };
 

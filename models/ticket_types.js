@@ -15,8 +15,10 @@ module.exports = (sequelize, DataTypes) => {
       ticket_sold: DataTypes.BIGINT,
       max_per_order: DataTypes.BIGINT,
       reserved_stock: DataTypes.BIGINT,
-      is_active: DataTypes.BOOLEAN,
+      admin_fee_included: DataTypes.BOOLEAN,
+      tax_included: DataTypes.BOOLEAN,
       status: DataTypes.ENUM("draft", "available", "closed"),
+      ticket_usage_type: DataTypes.ENUM("single_entry", "daily_entry", "multi_entry"),
       deliver_ticket: DataTypes.DATE,
       date_start: DataTypes.DATE,
       date_end: DataTypes.DATE,
@@ -33,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
   TicketType.associate = (models) => {
     TicketType.belongsTo(models.Event, {
       foreignKey: "event_id",
-      as: "events",
+      as: "event",
     });
     TicketType.hasMany(models.Ticket, {
       foreignKey: "ticket_type_id",

@@ -16,11 +16,12 @@ module.exports = {
         unique: true,
       },
 
-      order_id: {
+      order_item_id: {
         type: Sequelize.UUID,
         allowNull: false,
       },
 
+      creator_id: { type: Sequelize.UUID, allowNull: false },
       event_id: {
         type: Sequelize.UUID,
         allowNull: false,
@@ -109,9 +110,10 @@ module.exports = {
 
     // INDEXES (WAJIB UNTUK PERFORMA)
     await queryInterface.addIndex("tickets", ["ticket_code"]);
-    await queryInterface.addIndex("tickets", ["order_id"]);
+    await queryInterface.addIndex("tickets", ["order_item_id"]);
     await queryInterface.addIndex("tickets", ["event_id"]);
-    await queryInterface.addIndex("tickets", ["status"]);
+    await queryInterface.addIndex("tickets", ["status"]);    
+    await queryInterface.addIndex("tickets", ["sent_at"]);
   },
 
   async down(queryInterface, Sequelize) {

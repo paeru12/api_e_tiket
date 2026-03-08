@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 
-const saltRounds = parseInt(process.env.BCRYPT_SALT) || 12;
+const saltRounds = parseInt(process.env.BCRYPT_SALT) || 10;
 
 module.exports = {
   hash: async (password) => {

@@ -1,27 +1,46 @@
-const { TicketType, Event } = require("../../../models");
+const { TicketType, Event, sequelize } = require("../../../models");
 
 module.exports = {
-  async getAll(event_id) {
-    return await TicketType.findAll({
-      where: { event_id },
-      order: [["created_at", "DESC"]],
-    });
+
+  async getOne(ticketTypeId) {
+    return await TicketType.findByPk(ticketTypeId);
   },
 
-  async getOne(id) {
-    return await TicketType.findByPk(id);
+  async create(data) {
+    const transaction = await sequelize.transaction();
+
+    try {
+      // data adalah ARRAY langsung
+      const tickets = data.map(t => ({
+        ...t,
+        event_id: data[0].event_id
+      }));
+
+      const created = await TicketType.bulkCreate(tickets, { transaction });
+
+      const allTickets = await TicketType.findAll({
+        where: { event_id: data[0].event_id },
+        transaction
+      });
+
+      const lowestPrice = Math.min(...allTickets.map(t => t.price));
+
+      await Event.update(
+        { lowest_price: lowestPrice },
+        { where: { id: data[0].event_id }, transaction }
+      );
+
+      await transaction.commit();
+      return created;
+
+    } catch (err) {
+      await transaction.rollback();
+      throw err;
+    }
   },
 
-  async bulkCreate(tickets) {
-
-    const event = await Event.findByPk(tickets[0].event_id);
-    if (!event) throw new Error("Event not found");
-
-    return await TicketType.bulkCreate(tickets, { returning: true });
-  },
-
-  async update(id, data) {
-    const ticket = await TicketType.findByPk(id);
+  async update(ticketTypeId, data) {
+    const ticket = await TicketType.findByPk(ticketTypeId);
     if (!ticket) throw new Error("Ticket type not found");
 
     await ticket.update(data);

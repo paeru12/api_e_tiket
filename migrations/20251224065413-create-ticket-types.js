@@ -40,13 +40,21 @@ module.exports = {
         type: Sequelize.BIGINT,
         allowNull: false,
       },
-      is_active: {
+      admin_fee_included: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
+      },
+      tax_included: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
       },
       status: {
         type: Sequelize.ENUM("draft", "available", "closed",),
         defaultValue: "draft"
+      },
+      ticket_usage_type: {
+        type: Sequelize.ENUM("single_entry", "daily_entry", "multi_entry"),
+        defaultValue: "single_entry"
       },
       deliver_ticket: Sequelize.DATE,
       date_start: Sequelize.DATE,
@@ -58,6 +66,10 @@ module.exports = {
       updated_at: { type: Sequelize.DATE, allowNull: false },
       deleted_at: { type: Sequelize.DATE, allowNull: true }
     });
+
+    await queryInterface.addIndex("ticket_types", ["event_id"]);
+    await queryInterface.addIndex("ticket_types", ["ticket_sold"]);
+    await queryInterface.addIndex("ticket_types", ["status"]);
   },
 
   async down(queryInterface) {

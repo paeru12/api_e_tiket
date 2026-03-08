@@ -1,3 +1,4 @@
+"use strict";
 module.exports = (sequelize, DataTypes) => {
   const Kategori = sequelize.define("Kategori", {
     id: {
@@ -17,6 +18,13 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: "created_at",
     updatedAt: "updated_at"
   });
+
+  Kategori.associate = (models) => {
+    Kategori.belongsTo(models.User, {
+      foreignKey: "user_id",
+      as: "users"
+    });
+  };
 
   return Kategori;
 };

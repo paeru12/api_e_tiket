@@ -13,9 +13,16 @@ module.exports = {
       provider: Sequelize.STRING,
       provider_transactions: Sequelize.STRING,
 
-      amount: Sequelize.DECIMAL(15,2),
-      status: Sequelize.ENUM("pending", "paid", "failed"),
+      // FINAL amount dibayar oleh buyer
+      amount: Sequelize.DECIMAL(15, 2),
 
+      // untuk audit jika payment gateway memotong biaya
+      gateway_fee_amount: {
+        type: Sequelize.DECIMAL(15, 2),
+        defaultValue: 0,
+      },
+
+      status: Sequelize.ENUM("pending", "paid", "failed"),
       payment_method: Sequelize.STRING,
 
       qris_payload: Sequelize.TEXT,

@@ -17,11 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
 
-      order_id: {
+      order_item_id: {
         type: DataTypes.UUID,
         allowNull: false,
       },
-
+      creator_id: DataTypes.UUID,
       event_id: {
         type: DataTypes.UUID,
         allowNull: false,
@@ -103,9 +103,10 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Ticket.associate = (models) => {
-    Ticket.belongsTo(models.Order, { foreignKey: "order_id", as: "orders" });
+    Ticket.belongsTo(models.OrderItem, { foreignKey: "order_item_id", as: "orderitem" });
     Ticket.belongsTo(models.Event, { foreignKey: "event_id", as: "event" });
-    Ticket.belongsTo(models.TicketType, { foreignKey: "ticket_type_id", as: "ticket_type" });
+    Ticket.belongsTo(models.TicketType, { foreignKey: "ticket_type_id", as: "ticket_type" });    
+    Ticket.belongsTo(models.Creator, { foreignKey: "creator_id", as: "creators" });
   };
 
   return Ticket;
