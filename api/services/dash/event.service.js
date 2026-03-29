@@ -1,9 +1,131 @@
-const { Event, Creator, Kategori, User, sequelize, TicketType, GuestStars, Sponsors, Fasilitas, EventFasilitas, EventStaffAssignment } = require("../../../models");
+const { Event, Creator, Kategori, User, sequelize, TicketType, GuestStars, Sponsors, Fasilitas, EventFasilitas, EventStaffAssignment, TicketBundles, TicketBundleItem, TicketGroup, Ticket } = require("../../../models");
 const slugify = require("../../utils/slugify");
 const deleteImage = require("../../utils/deleteImage");
 const { Op } = require("sequelize");
 const { toWIB } = require("../../utils/wib");
+
+function fillMissingDays(data) {
+
+  const map = {};
+
+  data.forEach(d => {
+    map[d.date] = Number(d.revenue);
+  });
+
+  const result = [];
+  const today = new Date();
+
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(today.getDate() - i);
+
+    const key = d.toISOString().split("T")[0];
+
+    result.push({
+      date: key,
+      revenue: map[key] || 0
+    });
+  }
+
+  return result;
+};
+
 module.exports = {
+
+  async getRevenue7Days(eventId) {
+
+    const today = new Date();
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(today.getDate() - 6);
+
+    const result = await sequelize.query(`
+    SELECT 
+      DATE(t.created_at) as date,
+      SUM(tt.price) as revenue
+    FROM tickets t
+    JOIN ticket_types tt ON tt.id = t.ticket_type_id
+    WHERE tt.event_id = :eventId
+      AND t.created_at >= :startDate
+    GROUP BY DATE(t.created_at)
+    ORDER BY DATE(t.created_at)
+  `, {
+      replacements: {
+        eventId,
+        startDate: sevenDaysAgo
+      },
+      type: sequelize.QueryTypes.SELECT
+    });
+
+    return result;
+  },
+
+  async getOne(eventId) {
+    const event = await Event.findByPk(eventId, {
+      include: [
+        { model: User, as: 'users', attributes: ['full_name', 'image'] },
+        { model: Creator, as: 'creators', attributes: ['name', 'slug'] },
+        { model: Kategori, as: 'kategoris', attributes: ['name', 'slug'] },
+        {
+          model: TicketType,
+          as: "ticket_types",
+          include: [
+            {
+              model: TicketGroup,
+              as: "group",
+              attributes: ["id", "name"]
+            }
+          ]
+        },
+        {
+          model: TicketBundles,
+          as: "ticket_bundles",
+          include: [
+            {
+              model: TicketBundleItem,
+              as: "items",
+              include: [
+                {
+                  model: TicketType,
+                  as: "ticket_type",
+                  attributes: ["id", "name", "price"]
+                }
+              ]
+            }
+          ]
+        },
+        { model: GuestStars, as: 'guest_stars', attributes: ["id", "name", "image"] },
+        { model: Sponsors, as: 'sponsors', attributes: ["id", "name", "image"] },
+        { model: Fasilitas, as: 'fasilitas_event', through: { attributes: [] }, attributes: ["id", "name", "icon"] },
+        {
+          model: EventStaffAssignment,
+          as: "scan_staffs",
+          include: [
+            {
+              model: User,
+              as: "user",
+              attributes: ["id", "full_name"]
+            }
+          ]
+        }
+      ],
+      paranoid: false,
+    });
+    if (event.social_link) {
+      try {
+        event.social_link = JSON.parse(event.social_link);
+      } catch (e) {
+        event.social_link = null;
+      }
+    }
+
+    const rawData = await this.getRevenue7Days(eventId);
+    const revenue7days = fillMissingDays(rawData);
+    return {
+      ...event.toJSON(),
+      revenue_7_days: revenue7days
+    };
+  },
+
   async createAll(data) {
     const transaction = await sequelize.transaction();
 
@@ -85,49 +207,23 @@ module.exports = {
     return event;
   },
 
-  async getOne(eventId) {
-    const event = await Event.findByPk(eventId, {
-      include: [
-        { model: User, as: 'users', attributes: ['full_name', 'image'] },
-        { model: Creator, as: 'creators', attributes: ['name', 'slug'] },
-        { model: Kategori, as: 'kategoris', attributes: ['name', 'slug'] },
-        { model: TicketType, as: 'ticket_types' },
-        { model: GuestStars, as: 'guest_stars', attributes: ["id", "name", "image"] },
-        { model: Sponsors, as: 'sponsors', attributes: ["id", "name", "image"] },
-        { model: Fasilitas, as: 'fasilitas_event', through: { attributes: [] }, attributes: ["id", "name", "icon"] },
-        {
-          model: EventStaffAssignment,
-          as: "scan_staffs",
-          include: [
-            {
-              model: User,
-              as: "user",
-              attributes: ["id", "full_name"]
-            }
-          ]
-        }
-      ],
-      paranoid: false,
-    });
-    if (event.social_link) {
-      try {
-        event.social_link = JSON.parse(event.social_link);
-      } catch (e) {
-        event.social_link = null;
-      }
-    }
-    return event;
-  },
+  async getPagination({ page = 1, perPage = 10, search = "", creator_id, status }) {
 
-  async getPagination({ page = 1, perPage = 10, search = "", creator_id }) {
     const limit = parseInt(perPage);
     const offset = (page - 1) * limit;
 
     const where = {
       ...(creator_id ? { creator_id } : {}),
-      ...(search ? {
-        [Op.or]: [{ name: { [Op.like]: `%${search}%` } }]
-      } : {})
+
+      ...(status ? { status } : {}),
+
+      ...(search
+        ? {
+          [Op.or]: [
+            { name: { [Op.like]: `%${search}%` } }
+          ],
+        }
+        : {}),
     };
 
     const { rows, count } = await Event.findAndCountAll({
@@ -138,10 +234,10 @@ module.exports = {
       order: [["created_at", "DESC"]],
       attributes: { exclude: ["deleted_at"] },
       include: [
-        { model: User, attributes: ['full_name', 'image'], as: 'users' },
-        { model: Creator, attributes: ['name', 'slug'], as: 'creators' },
-        { model: Kategori, attributes: ['name', 'slug'], as: 'kategoris' },
-        { model: TicketType, as: 'ticket_types' },
+        { model: User, attributes: ["full_name", "image"], as: "users" },
+        { model: Creator, attributes: ["name", "slug"], as: "creators" },
+        { model: Kategori, attributes: ["name", "slug"], as: "kategoris" },
+        { model: TicketType, as: "ticket_types" },
       ],
     });
 

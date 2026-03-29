@@ -2,7 +2,7 @@ function buildTicketEmail({ name, eventName, eventDate, eventLocation }) {
 
 return `
 <!DOCTYPE html>
-<html>
+<html> 
 
 <head>
     <meta charset="UTF-8">

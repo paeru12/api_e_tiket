@@ -1,128 +1,241 @@
-const { Ticket, TicketType, Event, Creator } = require("../../../models");
+const {
+
+  Ticket,
+
+  TicketType,
+
+  Event,
+
+  OrderItem,
+
+  Order
+
+} = require("../../../models");
+
 const { Op } = require("sequelize");
 
-const promisePool = require("../../utils/promisePool");
-const generateTicketPDF = require("../../utils/ticketPdfGenerator");
-const sendEmail = require("../../../utils/sendEmailSES");
-const buildTicketEmail = require("../../utils/ticketEmailTemplate");
+const ticketEmailQueue =
+  require("../../../queues/ticketEmail.queue");
 
-const LIMIT = 500;      // ambil tiket per query
-const CONCURRENCY = 6;  // worker paralel
+const {
+
+  acquireLock,
+
+  releaseLock
+
+} = require("../../../utils/redisLock");
+
+
+const LIMIT = 200;
+
 
 module.exports = {
 
   async sendTickets() {
 
-    const now = new Date();
+    const lockKey =
+      "cron:ticketSender";
 
-    console.log("⏱️ Cron: Sending scheduled tickets...");
 
-    const tickets = await Ticket.findAll({
+    const locked =
+      await acquireLock(
 
-      where: {
-        status: "issued",
-        sent_at: null
-      },
+        lockKey,
 
-      include: [
-        {
-          model: TicketType,
-          as: "ticket_type",
-          required: true,
-          where: {
-            deliver_ticket: { [Op.lte]: now }
-          }
-        },
-        {
-          model: Event,
-          as: "event",
-          required: true
-        },
-        {
-          model: Creator,
-          as: "creators",
-          attributes: ["name"]
-        }
-      ],
+        55
 
-      limit: LIMIT
+      );
 
-    });
 
-    if (!tickets.length) {
+    if (!locked) {
 
-      console.log("No tickets to send");
+      console.log(
+        "cron locked"
+      );
+
       return;
 
     }
 
-    console.log(`Found ${tickets.length} tickets`);
 
-    await promisePool(
+    try {
 
-      tickets,
+      const now = new Date();
 
-      async (ticket) => {
 
-        try {
+      const tickets =
+        await Ticket.findAll({
 
-          // ======================
-          // Generate PDF
-          // ======================
+          where: {
 
-          const pdfBuffer = await generateTicketPDF({
-            ticket,
-            event: ticket.event,
-            ticketType: ticket.ticket_type,
-            promoter: ticket.creators?.name
-          });
+            status: "issued",
 
-          // ======================
-          // Build Email HTML
-          // ======================
+            sent_at: null
 
-          const html = buildTicketEmail({
-            name: ticket.owner_name,
-            eventName: ticket.event.name,
-            eventDate: ticket.event.date_start,
-            eventLocation: ticket.event.location
-          });
+          },
 
-          // ======================
-          // Send Email
-          // ======================
-          const names = ticket.ticket_code;
-          await sendEmail(
-            ticket.owner_email,
-            `🎫 Tiket Anda - ${ticket.event.name}`,
-            html,
-            pdfBuffer,
-            names
-          );
+          include: [
 
-          // ======================
-          // Update Ticket
-          // ======================
+            {
 
-          await ticket.update({
-            status: "sent",
-            sent_at: new Date()
-          });
+              model: TicketType,
 
-          console.log("Ticket sent:", ticket.ticket_code);
+              as: "ticket_type",
 
-        } catch (err) {
+              required: true,
 
-          console.error("Ticket send failed:", ticket.ticket_code);
-          console.error(err);
+              where: {
+
+                [Op.or]: [
+
+                  {
+
+                    deliver_ticket:
+                      null
+
+                  },
+
+                  {
+
+                    deliver_ticket: {
+
+                      [Op.lte]: now
+
+                    }
+
+                  }
+
+                ]
+
+              }
+
+            },
+
+            {
+
+              model: Event,
+
+              as: "event",
+
+              required: true
+
+            },
+
+            {
+
+              model: OrderItem,
+
+              as: "orderitem",
+
+              include: [
+
+                {
+
+                  model: Order,
+
+                  as: "order",
+
+                  attributes: [
+
+                    "id",
+
+                    "customer_email",
+
+                    "customer_name"
+
+                  ]
+
+                }
+
+              ]
+
+            }
+
+          ],
+
+          limit: LIMIT
+
+        });
+
+
+      if (!tickets.length) {
+
+        console.log(
+          "No ticket ready"
+        );
+
+        return;
+
+      }
+
+
+      /* group by order */
+
+      const orderMap = {};
+
+
+      for (const t of tickets) {
+
+        const orderId =
+          t.orderitem.order.id;
+
+
+        if (!orderMap[orderId]) {
+
+          orderMap[orderId] = {
+
+            order:
+              t.orderitem.order,
+
+            event:
+              t.event,
+
+            tickets: []
+
+          };
 
         }
 
-      },
 
-      CONCURRENCY
+        orderMap[
+          orderId
+        ].tickets.push(t);
 
-    );
+      }
+
+
+      const orders =
+        Object.values(orderMap);
+
+
+      console.log(
+        `Queue ${orders.length} email jobs`
+      );
+
+
+      for (const group of orders) {
+
+        await ticketEmailQueue.add(
+
+          "sendTicket",
+
+          group
+
+        );
+
+      }
+
+    }
+
+    finally {
+
+      await releaseLock(
+
+        lockKey
+
+      );
+
+    }
 
   }
 

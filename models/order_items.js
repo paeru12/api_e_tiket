@@ -8,7 +8,20 @@ module.exports = (sequelize, DataTypes) => {
       id: { type: DataTypes.UUID, primaryKey: true },
 
       order_id: DataTypes.UUID,
-      ticket_type_id: DataTypes.UUID,
+      item_type: {
+        type: DataTypes.ENUM("ticket", "bundle"),
+        allowNull: false
+      },
+
+      ticket_type_id: {
+        type: DataTypes.UUID,
+        allowNull: true
+      },
+
+      bundle_id: {
+        type: DataTypes.UUID,
+        allowNull: true
+      },
 
       quantity: DataTypes.BIGINT,
 
@@ -34,6 +47,10 @@ module.exports = (sequelize, DataTypes) => {
     OrderItem.belongsTo(models.TicketType, {
       foreignKey: "ticket_type_id",
       as: "ticket_type",
+    });
+    OrderItem.belongsTo(models.TicketBundles, {
+      foreignKey: "bundle_id",
+      as: "ticket_bundles",
     });
 
     OrderItem.hasMany(models.Ticket, {

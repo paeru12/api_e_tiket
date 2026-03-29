@@ -8,7 +8,6 @@ function generateSignature(ticket_code, event_id) {
     .createHmac("sha256", SECRET)
     .update(ticket_code + "|" + event_id)
     .digest("hex");
-
 }
 
 function verifySignature(ticket_code, event_id, signature) {

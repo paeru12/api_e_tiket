@@ -3,12 +3,13 @@ const processImage = require("../../utils/imageProcessor");
 
 module.exports = {
   async getPagination(req, res) {
-    const { page = 1, perPage = 10, search = "" } = req.query;
+    const { page = 1, perPage = 10, search = "", status } = req.query;
 
     const result = await service.getPagination({
       page,
       perPage,
       search,
+      status,
       creator_id: req.filterCreator,
     });
 

@@ -1,10 +1,9 @@
-// services/fe/payment.service.js
-
 const {
   sequelize,
   Order,
   OrderItem,
   TicketType,
+  TicketBundles,
   Event,
   Payment
 } = require("../../../models");
@@ -13,30 +12,48 @@ const xendit = require("../../utils/xendit");
 const { v4: uuid } = require("uuid");
 
 module.exports = {
+
   async createInvoice(orderId) {
 
     const trx = await sequelize.transaction();
 
     try {
 
-      const order = await Order.findByPk(orderId, {
-        transaction: trx,
-        lock: trx.LOCK.UPDATE
-      });
+      /* ===============================
+         ORDER
+      =============================== */
 
-      if (!order) throw new Error("Order not found");
+      const order = await Order.findByPk(
 
-      if (order.status !== "waiting_payment") {
+        orderId,
+
+        {
+          transaction: trx,
+          lock: trx.LOCK.UPDATE
+        }
+
+      );
+
+      if (!order)
+        throw new Error("Order not found");
+
+      if (order.status !== "waiting_payment")
         throw new Error("Order cannot be paid");
-      }
 
-      // prevent duplicate invoice
+
+      /* ===============================
+         PREVENT DUPLICATE INVOICE
+      =============================== */
+
       const existing = await Payment.findOne({
+
         where: {
           order_id: orderId,
           status: "pending"
         },
+
         transaction: trx
+
       });
 
       if (existing) {
@@ -47,185 +64,346 @@ module.exports = {
 
       }
 
-      // ===============================
-      // LOAD ORDER ITEMS
-      // ===============================
+
+      /* ===============================
+         LOAD ORDER ITEMS
+      =============================== */
 
       const items = await OrderItem.findAll({
+
         where: { order_id: orderId },
+
         include: [
+
           {
             model: TicketType,
             as: "ticket_type",
             attributes: [
               "id",
               "name",
-              "admin_fee_included",
-              "tax_included"
+              "event_id"
+            ]
+          },
+
+          {
+            model: TicketBundles,
+            as: "ticket_bundles",
+            attributes: [
+              "id",
+              "name"
             ]
           }
+
         ],
+
         transaction: trx
+
       });
 
-      if (!items.length) {
+      if (!items.length)
         throw new Error("Order items not found");
-      }
 
-      // ===============================
-      // LOAD EVENT
-      // ===============================
 
-      const event = await Event.findByPk(items[0].ticket_type.event_id);
+      /* ===============================
+         LOAD EVENT
+      =============================== */
 
-      const mediaBase = process.env.MEDIA_URL_FRONTEND || "";
-
-      const EVENT_INFO = {
-        name: event?.name || "",
-        logo: event?.image ? mediaBase + event.image : null,
-        location: event?.location || "",
-        province: event?.province || "",
-        district: event?.district || "",
-        date: event?.date_start || "",
-        time: event?.time_start || "",
-        timezone: event?.timezone || ""
-      };
-
-      const capitalize = (str) =>
-        str
-          ?.split(" ")
-          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-          .join(" ") || "";
-
-      // ===============================
-      // BUILD XENDIT ITEMS
-      // ===============================
-
-      let xenditItems = [];
-
-      let totalAdminFeeBuyer = 0;
-      let totalTaxBuyer = 0;
+      let eventId = null;
 
       for (const item of items) {
 
-        const tt = item.ticket_type;
+        if (item.ticket_type) {
 
-        xenditItems.push({
-          name: capitalize(tt.name.toUpperCase()),
-          quantity: item.quantity,
-          price: Number(item.ticket_price),
-          category: "ticket"
-        });
+          eventId =
+            item.ticket_type.event_id;
 
-        if (tt.admin_fee_included == 1) {
-          totalAdminFeeBuyer += Number(item.admin_fee_amount);
-        }
+          break;
 
-        if (tt.tax_included == 1) {
-          totalTaxBuyer += Number(item.tax_amount);
         }
 
       }
+
+      if (!eventId) {
+
+        const bundleItem =
+          items.find(
+            i => i.ticket_bundles
+          );
+
+        eventId =
+          bundleItem?.ticket_bundles?.event_id;
+
+      }
+
+      const event =
+        await Event.findByPk(eventId);
+
+      const mediaBase =
+        process.env.MEDIA_URL_FRONTEND || "";
+
+      const EVENT_INFO = {
+
+        name: event?.name || "",
+
+        logo: event?.image
+          ? mediaBase + event.image
+          : null,
+
+        location:
+          event?.location || "",
+
+        province:
+          event?.province || "",
+
+        district:
+          event?.district || "",
+
+        date:
+          event?.date_start || "",
+
+        time:
+          event?.time_start || "",
+
+        timezone:
+          event?.timezone || ""
+
+      };
+
+
+      /* ===============================
+         BUILD XENDIT ITEMS
+      =============================== */
+
+      /* BUILD XENDIT ITEMS */
+
+      const capitalize = (str) =>
+        str?.toLowerCase()
+          .replace(/\b\w/g, l => l.toUpperCase());
+
+      let xenditItems = [];
+
+      /* ticket & bundle lines */
+
+      for (const item of items) {
+
+        if (item.item_type === "ticket") {
+
+          xenditItems.push({
+
+            name:
+              capitalize(
+                item.ticket_type.name
+              ),
+
+            quantity:
+              Number(item.quantity),
+
+            price:
+              Number(item.ticket_price),
+
+            category: "ticket"
+
+          });
+
+        }
+
+        if (item.item_type === "bundle") {
+
+          xenditItems.push({
+
+            name:
+              capitalize(
+                item.ticket_bundles.name
+              ),
+
+            quantity:
+              Number(item.quantity),
+
+            price:
+              Number(item.ticket_price),
+
+            category: "bundle"
+
+          });
+
+        }
+
+      }
+
+      /* ======================
+      ONLY BUYER FEE
+      ====================== */
+
+      let totalAdminFeeBuyer =
+        (order.admin_fee_bearer === "buyer"
+          || order.admin_fee_bearer === "mixed")
+
+          ? Number(order.admin_fee_amount)
+          : 0;
+
+      let totalTaxBuyer =
+        (order.tax_bearer === "buyer"
+          || order.tax_bearer === "mixed")
+
+          ? Number(order.tax_amount)
+          : 0;
+
+
+      /* ===============================
+         ADD SERVICE FEE
+      =============================== */
 
       if (totalAdminFeeBuyer > 0) {
 
         xenditItems.push({
+
           name: "Biaya Layanan",
+
           quantity: 1,
+
           price: totalAdminFeeBuyer,
+
           category: "service_fee"
+
         });
 
       }
+
+
+      /* ===============================
+         ADD TAX
+      =============================== */
 
       if (totalTaxBuyer > 0) {
 
         xenditItems.push({
-          name: "Pajak Daerah",
+
+          name: "Pajak",
+
           quantity: 1,
+
           price: totalTaxBuyer,
+
           category: "tax"
+
         });
 
       }
 
-      // ===============================
-      // DESCRIPTION
-      // ===============================
 
-      const fullDescription = `
-Pembayaran Tiket Event: ${EVENT_INFO.name}. Harga sudah termasuk biaya layanan & pajak daerah.
+      /* ===============================
+         DESCRIPTION
+      =============================== */
+
+      const description = `
+Pembayaran tiket event ${EVENT_INFO.name}. Harga sudah termasuk biaya layanan & pajak.
       `.trim();
 
-      const expiryTime = new Date(Date.now() + 60 * 60 * 1000).toISOString();
 
-      // ===============================
-      // CREATE XENDIT INVOICE
-      // ===============================
+      /* ===============================
+         CREATE INVOICE
+      =============================== */
 
-      const invoice = await xendit.Invoice.createInvoice({
+      const expiryTime =
+        new Date(
+          Date.now() + 60 * 60 * 1000
+        ).toISOString();
 
-        data: {
 
-          externalId: order.code_order,
+      const invoice =
+        await xendit.Invoice.createInvoice({
 
-          amount: Number(order.buyer_pay_total),
+          data: {
 
-          currency: "IDR",
+            externalId:
+              order.code_order,
 
-          description: fullDescription,
+            amount:
+              Number(
+                order.buyer_pay_total
+              ),
 
-          items: xenditItems,
+            currency: "IDR",
 
-          customer: {
+            description,
 
-            givenNames: order.customer_name,
-            email: order.customer_email,
-            mobileNumber: order.customer_phone
+            items:
+              xenditItems,
 
-          },
+            customer: {
 
-          successRedirectUrl: process.env.FRONTEND_SUCCESS_URL,
+              givenNames:
+                order.customer_name,
 
-          failureRedirectUrl: process.env.FRONTEND_FAILED_URL,
+              email:
+                order.customer_email,
 
-          expiryDate: expiryTime
+              mobileNumber:
+                order.customer_phone
 
-        }
+            },
 
-      });
+            successRedirectUrl:
+              process.env
+                .FRONTEND_SUCCESS_URL,
 
-      // ===============================
-      // SAVE PAYMENT
-      // ===============================
+            failureRedirectUrl:
+              process.env
+                .FRONTEND_FAILED_URL,
 
-      const payment = await Payment.create({
+            expiryDate:
+              expiryTime
 
-        id: uuid(),
+          }
 
-        order_id: orderId,
+        });
 
-        provider: "xendit",
 
-        provider_transactions: invoice.id,
+      /* ===============================
+         SAVE PAYMENT
+      =============================== */
 
-        amount: order.buyer_pay_total,
+      const payment =
+        await Payment.create({
 
-        status: "pending",
+          id: uuid(),
 
-        payment_method: "INVOICE",
+          order_id:
+            orderId,
 
-        invoice_url: invoice.invoiceUrl,
+          provider: "xendit",
 
-        raw_callback_log: JSON.stringify(invoice)
+          provider_transactions:
+            invoice.id,
 
-      }, { transaction: trx });
+          amount:
+            order.buyer_pay_total,
+
+          status: "pending",
+
+          payment_method:
+            order.payment_method,
+
+          invoice_url:
+            invoice.invoiceUrl,
+
+          raw_callback_log:
+            JSON.stringify(invoice)
+
+        },
+
+          { transaction: trx }
+
+        );
+
 
       await trx.commit();
 
       return payment;
 
-    } catch (err) {
+    }
+
+    catch (err) {
 
       await trx.rollback();
 

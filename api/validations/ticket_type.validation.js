@@ -47,20 +47,31 @@ module.exports = {
       .default("single_entry"),
   }),
 
+  // bundle
+  // bundle validation (FIXED)
   createBundle: Joi.array().items(
     Joi.object({
 
       name: Joi.string().max(150).required(),
-
       description: Joi.string().allow("", null),
 
       price: Joi.number().positive().required(),
 
+      discount_type: Joi.string().valid("percent", "flat").allow(null),
+      discount_value: Joi.number().allow(null),
+
+      total_stock: Joi.number().integer().min(0).allow(null),
+
       max_per_order: Joi.number().integer().min(1).default(10),
 
+      sale_start: Joi.date().required(),
+      sale_end: Joi.date().required(),
+
       status: Joi.string()
-        .valid("draft", "available", "closed")
-        .default("draft"),
+        .valid("scheduled", "on_sale", "ended")
+        .default("scheduled"),
+
+      is_hidden: Joi.boolean().default(false),
 
       items: Joi.array().items(
         Joi.object({

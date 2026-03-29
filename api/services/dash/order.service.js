@@ -40,127 +40,283 @@ module.exports = {
         start_date,
         end_date
     }) {
-        const limit = Number(perPage);
-        const offset = (page - 1) * limit;
 
-        const baseWhere = {
+        const limit = Number(perPage) || 10;
+        const offset = (Number(page) - 1) * limit;
+
+        const where = {
             creator_id,
-            ...(status !== "ALL" && status ? { status: status.toLowerCase() } : {}),
+
+            ...(status && status !== "ALL"
+                ? { status: status.toLowerCase() }
+                : {}),
+
             ...buildDateRange(start_date, end_date),
         };
 
         if (search) {
-            baseWhere[Op.or] = [
+            where[Op.or] = [
                 { code_order: { [Op.like]: `%${search}%` } },
                 { customer_name: { [Op.like]: `%${search}%` } },
                 { customer_email: { [Op.like]: `%${search}%` } },
                 { customer_phone: { [Op.like]: `%${search}%` } },
-                { "$items.tickets.ticket_code$": { [Op.like]: `%${search}%` } },
             ];
         }
 
-        if (event_id && event_id !== "ALL") {
-            baseWhere["$items.ticket_type.event.id$"] = event_id;
-        }
+        const include = [
 
-        if (payment_method && payment_method !== "ALL") {
-            baseWhere["$payments.payment_method$"] = payment_method;
-        }
+            // ITEMS
+            {
+                model: OrderItem,
+                as: "items",
+                required: false,
 
-        const includeItems = {
-            model: OrderItem,
-            as: "items",
-            required: !!event_id,
-            include: [
-                {
-                    model: TicketType,
-                    as: "ticket_type",
-                    include: [{ model: Event, as: "event" }]
-                },
-                {
-                    model: Ticket,
-                    as: "tickets",
-                    attributes: ["ticket_code", "issued_at", "sent_at"]
-                }
-            ]
-        };
+                include: [
 
-        const includePayment = {
-            model: Payment,
-            as: "payments",
-            attributes: ["payment_method", "status", "amount", "paid_at"]
-        };
+                    {
+                        model: TicketType,
+                        as: "ticket_type",
+                        required: false,
 
-        const { rows, count } = await Order.findAndCountAll({
-            where: baseWhere,
-            include: [includeItems, includePayment],
-            order: [["created_at", "DESC"]],
-            distinct: true,
-            limit,
-            offset,
-            subQuery: false,
-        });
+                        include: [
 
-        const allOrders = await Order.findAll({
-            where: baseWhere,
-            include: [includeItems, includePayment],
-            distinct: true
-        });
+                            {
+                                model: Event,
+                                as: "event",
+
+                                required:
+                                    !!event_id &&
+                                    event_id !== "ALL",
+
+                                where:
+                                    event_id &&
+                                        event_id !== "ALL"
+                                        ? { id: event_id }
+                                        : undefined
+                            }
+
+                        ]
+                    },
+
+                    {
+                        model: Ticket,
+                        as: "tickets",
+                        required: false,
+
+                        attributes: [
+                            "ticket_code",
+                            "issued_at",
+                            "sent_at"
+                        ]
+                    }
+
+                ]
+            },
+
+            // PAYMENT
+            {
+                model: Payment,
+                as: "payments",
+
+                required:
+                    !!payment_method &&
+                    payment_method !== "ALL",
+
+                where:
+                    payment_method &&
+                        payment_method !== "ALL"
+                        ? { payment_method }
+                        : undefined,
+
+                attributes: [
+                    "payment_method",
+                    "status",
+                    "amount",
+                    "paid_at"
+                ]
+            }
+
+        ];
+
+        const { rows, count } =
+            await Order.findAndCountAll({
+
+                where,
+
+                include,
+
+                distinct: true,
+
+                order: [
+                    ["created_at", "DESC"]
+                ],
+
+                limit,
+
+                offset
+            });
+
+        // =====================
+        // SUMMARY
+        // =====================
+
+        const summaryRows =
+            await Order.findAll({
+
+                where,
+
+                include,
+
+                distinct: true
+            });
 
         let totalTicketQty = 0;
         let totalRevenue = 0;
         let totalOrganizerNet = 0;
 
-        allOrders.forEach(o => {
-            totalRevenue += Number(o.buyer_pay_total);
-            totalOrganizerNet += Number(o.organizer_net_total);
-            totalTicketQty += o.items.reduce((s, i) => s + Number(i.quantity), 0);
+        summaryRows.forEach(order => {
+
+            totalRevenue +=
+                Number(order.buyer_pay_total || 0);
+
+            totalOrganizerNet +=
+                Number(order.organizer_net_total || 0);
+
+            totalTicketQty +=
+                order.items.reduce(
+
+                    (sum, item) =>
+                        sum + Number(item.quantity || 0),
+
+                    0
+                );
+
         });
 
-        const formatted = rows.map((o) => {
-            const pay = o.payments?.[0] ?? null;
+        // =====================
+        // FORMAT RESPONSE
+        // =====================
 
-            return {
-                id: o.id,
-                invoice_no: o.code_order,
+        const formattedRows =
+            rows.map(order => {
 
-                customer_name: o.customer_name,
-                customer_email: maskEmail(o.customer_email),
-                customer_phone: maskPhone(o.customer_phone),
+                const pay =
+                    order.payments?.[0] || null;
 
-                event_name: o.items?.[0]?.ticket_type?.event?.name ?? "-",
+                // ambil semua event
+                const eventNames =
+                    order.items
+                        ?.map(i =>
+                            i.ticket_type?.event?.name
+                        )
+                        .filter(Boolean);
 
-                total_amount: Number(o.buyer_pay_total),
-                organizer_net: Number(o.organizer_net_total),
+                return {
 
-                status: o.status.toUpperCase(),
-                created_at: toWIB(o.created_at),
+                    id: order.id,
 
-                payment: pay
-                    ? {
-                        method: pay.payment_method,
-                        status: pay.status.toUpperCase(),
-                        amount: Number(pay.amount),
-                        paid_at: pay.paid_at ? toWIB(pay.paid_at) : null,
-                    }
-                    : null,
-            };
-        });
+                    invoice_no:
+                        order.code_order,
+
+                    customer_name:
+                        order.customer_name,
+
+                    customer_email:
+                        maskEmail(
+                            order.customer_email
+                        ),
+
+                    customer_phone:
+                        maskPhone(
+                            order.customer_phone
+                        ),
+
+                    event_name:
+                        eventNames?.length
+                            ? [
+                                ...new Set(
+                                    eventNames
+                                )
+                            ].join(", ")
+                            : "-",
+
+                    total_amount:
+                        Number(
+                            order.buyer_pay_total
+                        ),
+
+                    organizer_net:
+                        Number(
+                            order.organizer_net_total
+                        ),
+
+                    status:
+                        order.status.toUpperCase(),
+
+                    created_at:
+                        toWIB(order.created_at),
+
+                    payment:
+
+                        pay
+                            ? {
+
+                                method:
+                                    pay.payment_method,
+
+                                status:
+                                    pay.status.toUpperCase(),
+
+                                amount:
+                                    Number(pay.amount),
+
+                                paid_at:
+
+                                    pay.paid_at
+                                        ? toWIB(pay.paid_at)
+                                        : null,
+
+                            }
+                            : null,
+
+                };
+
+            });
 
         return {
-            rows: formatted,
+
+            rows:
+                formattedRows,
+
             count,
-            page,
-            perPage: limit,
-            totalPages: Math.ceil(count / limit),
+
+            page:
+                Number(page),
+
+            perPage:
+                limit,
+
+            totalPages:
+                Math.ceil(count / limit),
 
             summary: {
-                total_orders: allOrders.length,
-                total_ticket_qty: totalTicketQty,
-                total_revenue: totalRevenue,
-                total_organizer_net: totalOrganizerNet
+
+                total_orders:
+                    summaryRows.length,
+
+                total_ticket_qty:
+                    totalTicketQty,
+
+                total_revenue:
+                    totalRevenue,
+
+                total_organizer_net:
+                    totalOrganizerNet,
+
             }
+
         };
+
     },
 
     async getDetail(order_id, creator_id) {
@@ -400,3 +556,17 @@ module.exports = {
     }
 
 };
+
+function extractEventName(order) {
+    const events = order.items
+        ?.map(i => i.ticket_type?.event?.name)
+        .filter(Boolean);
+
+    if (!events?.length) return "-";
+
+    // jika 1 event
+    if (events.length === 1) return events[0];
+
+    // jika multi event
+    return events.join(", ");
+}

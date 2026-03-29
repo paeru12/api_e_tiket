@@ -7,39 +7,71 @@ function getTransporter() {
   if (transporter) return transporter;
 
   transporter = nodemailer.createTransport({
+
     host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
+
+    port: Number(process.env.SMTP_PORT),
+
+    secure: false,
+
     auth: {
+
       user: process.env.SMTP_USER,
+
       pass: process.env.SMTP_PASS
-    }
+
+    },
+
+    pool: true,
+
+    maxConnections: 2,
+
+    maxMessages: 50,
+
+    rateLimit: 5
+
   });
 
   return transporter;
 
 }
 
-module.exports = async function sendEmail(to, subject, html, pdfBuffer, names) {
 
-  const transporter = getTransporter();
 
-  await transporter.sendMail({
+module.exports =
+  async function sendEmail(
 
-    from: process.env.EMAIL_FROM,
     to,
     subject,
     html,
+    attachments = []
 
-    attachments: pdfBuffer
-      ? [
-          {
-            filename: `${names}.pdf`,
-            content: pdfBuffer,
-            contentType: "application/pdf"
-          }
-        ]
-      : []
+  ) {
 
-  });
+    const transporter =
+      getTransporter();
 
-};
+    console.log(
+
+      "total attachment:",
+      attachments.length
+
+    );
+
+    return transporter.sendMail({
+
+      from: process.env.EMAIL_FROM,
+
+      to,
+
+      subject,
+
+      html,
+
+      text: "Tiket event terlampir",
+
+      attachments
+
+    });
+
+  };

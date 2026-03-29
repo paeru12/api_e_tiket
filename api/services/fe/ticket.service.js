@@ -1,6 +1,14 @@
 // services/fe/ticket.service.js
 
-const { Event, Ticket, OrderItem, TicketType } = require("../../../models");
+const {
+  Event,
+  Ticket,
+  OrderItem,
+  TicketType,
+  TicketBundles,
+  TicketBundleItem
+} = require("../../../models");
+
 const crypto = require("crypto");
 const { generateSignature } = require("../../utils/qrSignature");
 
@@ -8,102 +16,160 @@ module.exports = {
 
   async generateTickets(orderId, transaction) {
 
-    // ==============================
-    // LOAD ORDER ITEMS
-    // ==============================
-
     const items = await OrderItem.findAll({
+
       where: { order_id: orderId },
+
       include: [
+
         {
           model: TicketType,
           as: "ticket_type",
           attributes: ["id", "event_id"]
+        },
+
+        {
+          model: TicketBundles,
+          as: "ticket_bundles",
+
+          include: [
+
+            {
+              model: TicketBundleItem,
+              as: "items"
+            }
+
+          ]
+
         }
+
       ],
+
       transaction
+
     });
 
     if (!items.length) return;
-
-    // ==============================
-    // LOAD EVENT ONCE
-    // ==============================
-
-    const eventId = items[0].ticket_type.event_id;
-
-    const event = await Event.findByPk(eventId, {
-      attributes: ["creator_id"],
-      transaction
-    });
-
-    if (!event) {
-      throw new Error("Event not found");
-    }
-
-    const creatorId = event.creator_id;
-
-    // ==============================
-    // BUILD TICKET PAYLOAD
-    // ==============================
 
     const payload = [];
 
     for (const item of items) {
 
-      let attendees;
+      /* =========================
+         DIRECT TICKET
+      ========================= */
 
-      try {
+      if (item.item_type === "ticket") {
 
-        attendees = Array.isArray(item.attendees)
-          ? item.attendees
-          : JSON.parse(item.attendees);
+        const attendees =
+          parseAttendees(item.attendees);
 
-      } catch (err) {
+        for (const a of attendees) {
 
-        console.error("Invalid attendee format", item.id);
-        continue;
+          payload.push(
+
+            buildTicketPayload({
+
+              orderItemId: item.id,
+
+              eventId:
+                item.ticket_type.event_id,
+
+              ticketTypeId:
+                item.ticket_type_id,
+
+              attendee: a
+
+            })
+
+          );
+
+        }
 
       }
 
-      for (const a of attendees) {
+      /* =========================
+         BUNDLE
+      ========================= */
 
-        const code = "BLSNG-" + crypto.randomBytes(8).toString("hex");
+      if (item.item_type === "bundle") {
 
-        const signature = generateSignature(code, eventId);
+        const attendees =
+          parseAttendees(item.attendees);
 
-        const qrPayload = {
-          t: code,
-          e: eventId,
-          s: signature
-        };
+        const bundle =
+          item.ticket_bundles;
 
-        payload.push({
+        const ticketTypeIds =
+          bundle.items.map(
+            i => i.ticket_type_id
+          );
 
-          order_item_id: item.id,
+        /* load ticket type */
 
-          creator_id: creatorId,
+        const ticketTypes =
+          await TicketType.findAll({
 
-          event_id: eventId,
+            where: {
+              id: ticketTypeIds
+            },
 
-          ticket_type_id: item.ticket_type_id,
+            attributes: [
+              "id",
+              "event_id"
+            ],
 
-          ticket_code: code,
+            transaction
 
-          owner_name: a.name,
-          owner_email: a.email,
-          owner_phone: a.phone,
+          });
 
-          type_identity: a.type_identity,
-          no_identity: a.no_identity,
+        const ticketMap = {};
 
-          qr_payload: JSON.stringify(qrPayload),
+        ticketTypes.forEach(t => {
 
-          status: "issued",
-
-          issued_at: new Date()
+          ticketMap[t.id] = t;
 
         });
+
+        let pointer = 0;
+
+        for (const bItem of bundle.items) {
+
+          const ticketType =
+            ticketMap[
+            bItem.ticket_type_id
+            ];
+
+          const totalTicket =
+            bItem.quantity *
+            item.quantity;
+
+          for (let i = 0; i < totalTicket; i++) {
+
+            const attendee =
+              attendees[pointer++];
+
+            payload.push(
+
+              buildTicketPayload({
+
+                orderItemId: item.id,
+
+                eventId:
+                  ticketType.event_id,
+
+                ticketTypeId:
+                  ticketType.id,
+
+                attendee
+
+              })
+
+            );
+
+          }
+
+        }
 
       }
 
@@ -111,15 +177,81 @@ module.exports = {
 
     if (!payload.length) return;
 
-    // ==============================
-    // BULK INSERT TICKETS
-    // ==============================
-
-    await Ticket.bulkCreate(payload, {
-      transaction,
-      validate: true
-    });
+    await Ticket.bulkCreate(
+      payload,
+      {
+        transaction,
+        validate: true
+      }
+    );
 
   }
 
 };
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function parseAttendees(raw) {
+
+  if (!raw) return [];
+
+  if (Array.isArray(raw))
+    return raw;
+
+  return JSON.parse(raw);
+
+}
+
+
+function buildTicketPayload({
+  orderItemId,
+  eventId,
+  ticketTypeId,
+  attendee
+}) {
+
+  const code =
+    "BLSNG-" +
+    crypto.randomBytes(8).toString("hex");
+
+  const signature =
+    generateSignature(code, eventId);
+
+  return {
+
+    order_item_id: orderItemId,
+
+    event_id: eventId,
+
+    ticket_type_id: ticketTypeId,
+
+    ticket_code: code,
+
+    owner_name: attendee.name,
+
+    owner_email: attendee.email,
+
+    owner_phone: attendee.phone,
+
+    type_identity: attendee.type_identity,
+
+    no_identity: attendee.no_identity,
+
+    qr_payload: JSON.stringify({
+
+      t: code,
+      e: eventId,
+      s: signature
+
+    }),
+
+    status: "issued",
+
+    issued_at: new Date()
+
+  };
+
+}

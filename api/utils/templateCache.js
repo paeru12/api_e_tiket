@@ -4,7 +4,7 @@ const ejs = require("ejs");
 
 let compiledTemplate;
 
-function getTemplate() {
+function getTemplate() { 
 
   if (!compiledTemplate) {
 

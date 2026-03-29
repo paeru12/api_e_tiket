@@ -1,4 +1,3 @@
-
 "use strict";
 
 module.exports = {
@@ -17,18 +16,53 @@ module.exports = {
         allowNull: false
       },
 
+      /* =========================
+         BASIC INFO
+      ========================= */
+
       name: {
         type: Sequelize.STRING(150),
         allowNull: false
       },
 
-      description: {
-        type: Sequelize.TEXT
-      },
+      description: Sequelize.TEXT,
+
+      /* =========================
+         PRICING
+      ========================= */
 
       price: {
         type: Sequelize.DECIMAL(15, 2),
         allowNull: false
+      },
+
+      discount_type: {
+        type: Sequelize.ENUM("percent", "flat"),
+        allowNull: true
+      },
+
+      discount_value: {
+        type: Sequelize.DECIMAL(15, 2),
+        allowNull: true
+      },
+
+      /* =========================
+         STOCK
+      ========================= */
+
+      total_stock: {
+        type: Sequelize.BIGINT,
+        allowNull: true
+      },
+
+      sold: {
+        type: Sequelize.BIGINT,
+        defaultValue: 0
+      },
+
+      reserved_stock: {
+        type: Sequelize.BIGINT,
+        defaultValue: 0
       },
 
       max_per_order: {
@@ -36,18 +70,53 @@ module.exports = {
         defaultValue: 10
       },
 
-      status: {
-        type: Sequelize.ENUM("draft", "available", "closed"),
-        defaultValue: "draft"
+      /* =========================
+         SALE
+      ========================= */
+
+      sale_start: {
+        type: Sequelize.DATE,
+        allowNull: false
       },
 
-      created_at: Sequelize.DATE,
-      updated_at: Sequelize.DATE
+      sale_end: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+
+      /* =========================
+         STATUS
+      ========================= */
+
+      status: {
+        type: Sequelize.ENUM("scheduled", "on_sale", "ended"),
+        defaultValue: "scheduled"
+      },
+
+      is_hidden: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
+
+      created_at: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+
+      updated_at: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+
+      deleted_at: Sequelize.DATE
 
     });
 
     await queryInterface.addIndex("ticket_bundles", ["event_id"]);
-    await queryInterface.addIndex("ticket_bundles", ["event_id", "status"]);
+    await queryInterface.addIndex("ticket_bundles", ["status"]);
+    await queryInterface.addIndex("ticket_bundles", ["sale_start"]);
+    await queryInterface.addIndex("ticket_bundles", ["sale_end"]);
+
   },
 
   async down(queryInterface) {

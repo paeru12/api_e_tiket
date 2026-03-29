@@ -1,13 +1,14 @@
 // controllers/dash/payout.controller.js
 const service = require("../../services/dash/payout.service");
-const { CreatorBankAccounts } = require("../../../models");
-
+const { CreatorBankAccounts, User } = require("../../../models");
+const bcrypt = require("../../../utils/bcrypt");
 module.exports = {
 
     async dashboard(req, res) {
         try {
             const creator_id = req.user.creator_id;
-            const data = await service.getDashboard(creator_id);
+            const { range = 30 } = req.query;
+            const data = await service.getDashboard(creator_id, range);
 
             res.json({ success: true, data });
         } catch (err) {
@@ -27,16 +28,86 @@ module.exports = {
     },
 
     async create(req, res) {
+
         try {
-            const creator_id = req.user.creator_id;
-            const { amount } = req.body;
 
-            const payout = await service.createPayout(creator_id, amount);
+            const creator_id =
+                req.user.creator_id;
 
-            res.json({ success: true, message: "Payout created", data: payout });
-        } catch (err) {
-            res.status(400).json({ success: false, message: err.message });
+            const userId =
+                req.user.id;
+
+            const {
+
+                amount,
+                password
+
+            } = req.body;
+
+
+            const user =
+                await User.findByPk(
+                    userId
+                );
+
+
+            const valid =
+                await bcrypt.compare(
+                    password,
+                    user.password_hash
+                );
+
+
+            if (!valid)
+                return res
+                    .status(401)
+                    .json({
+
+                        success: false,
+
+                        message:
+                            "Password salah"
+
+                    });
+
+
+            const io =
+                req.app.get("io");
+
+
+            const payout =
+                await service.createPayout(
+
+                    creator_id,
+
+                    amount,
+
+                    io
+
+                );
+
+
+            res.json({
+
+                success: true,
+
+                data: payout
+
+            });
+
         }
+        catch (err) {
+
+            res.status(400).json({
+
+                success: false,
+
+                message: err.message
+
+            });
+
+        }
+
     },
 
     async bankInfo(req, res) {
@@ -45,8 +116,6 @@ module.exports = {
 
         res.json({ success: true, data: bank || null });
     },
-
-    // end
 
     // Get Creator Finance Setting by Creator ID
     async getCreatorFinanceSetting(req, res) {
@@ -117,4 +186,65 @@ module.exports = {
             res.status(500).json({ success: false, message: err.message });
         }
     },
+
+    async verifyPassword(req, res) {
+
+        try {
+
+            const userId =
+                req.user.id;
+
+            const { password } =
+                req.body;
+
+            const user =
+                await User.findByPk(
+                    userId
+                );
+
+            if (!user)
+                throw new Error(
+                    "User not found"
+                );
+
+            const match =
+                await bcrypt.compare(
+                    password,
+                    user.password_hash
+                );
+
+            if (!match)
+                return res
+                    .status(401)
+                    .json({
+
+                        success: false,
+
+                        message:
+                            "Password salah"
+
+                    });
+
+            res.json({
+
+                success: true,
+
+                message: "Password valid"
+
+            });
+
+        }
+        catch (err) {
+
+            res.status(400).json({
+
+                success: false,
+
+                message: err.message
+
+            });
+
+        }
+
+    }
 };

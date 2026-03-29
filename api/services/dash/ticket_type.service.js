@@ -135,9 +135,20 @@ module.exports = {
           event_id: b.event_id,
           name: b.name,
           description: b.description,
+
           price: b.price,
+          discount_type: b.discount_type,
+          discount_value: b.discount_value,
+
+          total_stock: b.total_stock,
+
           max_per_order: b.max_per_order,
-          status: b.status || "draft"
+
+          sale_start: b.sale_start,
+          sale_end: b.sale_end,
+
+          status: b.status,
+          is_hidden: b.is_hidden
         })),
         { returning: true, transaction }
       );
@@ -145,7 +156,6 @@ module.exports = {
       const allItems = [];
 
       bundles.forEach((bundle, index) => {
-
         const items = data[index].items || [];
 
         items.forEach(i => {
@@ -155,15 +165,13 @@ module.exports = {
             quantity: i.quantity
           });
         });
-
       });
 
-      if (allItems.length > 0) {
+      if (allItems.length) {
         await TicketBundleItem.bulkCreate(allItems, { transaction });
       }
 
       await transaction.commit();
-
       return bundles;
 
     } catch (err) {
@@ -183,16 +191,26 @@ module.exports = {
     try {
 
       const bundle = await TicketBundles.findByPk(bundleId);
-
       if (!bundle) throw new Error("Bundle not found");
 
       await bundle.update({
 
         name: data.name,
-        price: data.price,
         description: data.description,
+
+        price: data.price,
+        discount_type: data.discount_type,
+        discount_value: data.discount_value,
+
+        total_stock: data.total_stock,
+
         max_per_order: data.max_per_order,
-        status: data.status
+
+        sale_start: data.sale_start,
+        sale_end: data.sale_end,
+
+        status: data.status,
+        is_hidden: data.is_hidden
 
       }, { transaction });
 
@@ -203,27 +221,23 @@ module.exports = {
           transaction
         });
 
-        const items = data.items.map(i => ({
-          bundle_id: bundleId,
-          ticket_type_id: i.ticket_type_id,
-          quantity: i.quantity
-        }));
-
-        await TicketBundleItem.bulkCreate(items, { transaction });
-
+        await TicketBundleItem.bulkCreate(
+          data.items.map(i => ({
+            bundle_id: bundleId,
+            ticket_type_id: i.ticket_type_id,
+            quantity: i.quantity
+          })),
+          { transaction }
+        );
       }
 
       await transaction.commit();
-
       return bundle;
 
     } catch (err) {
-
       await transaction.rollback();
       throw err;
-
     }
-
   },
 
   // ===============================

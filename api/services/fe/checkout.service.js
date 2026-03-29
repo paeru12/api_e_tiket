@@ -1,14 +1,14 @@
-// services/fe/checkout.service.js
-
 const {
   sequelize,
-  Event,
   Order,
   OrderItem,
   TicketType,
   CustomerUser,
   CreatorFinanceSettings,
-  SystemFinanceSettings
+  SystemFinanceSettings,
+  TicketBundles,
+  TicketBundleItem,
+  Event
 } = require("../../../models");
 
 const { v4: uuid } = require("uuid");
@@ -23,256 +23,566 @@ module.exports = {
 
       const { customer, items } = payload;
 
-      if (!items || !items.length) {
+      if (!items?.length)
         throw new Error("Items required");
-      }
 
-      // ==========================
-      // VALIDATE ATTENDEES
-      // ==========================
-
-      for (const item of items) {
-
-        if (!item.attendees || item.attendees.length !== item.quantity) {
-          throw new Error("Attendees must match quantity");
-        }
-
-      }
-
-      // ==========================
-      // CUSTOMER
-      // ==========================
-
-      let customerUser = await CustomerUser.findOne({
-        where: { email: customer.email },
-        transaction: trx
-      });
+      let customerUser =
+        await CustomerUser.findOne({
+          where: { email: customer.email },
+          transaction: trx
+        });
 
       if (!customerUser) {
 
-        customerUser = await CustomerUser.create({
-          full_name: customer.full_name,
-          email: customer.email,
-          phone: customer.phone
-        }, { transaction: trx });
+        customerUser =
+          await CustomerUser.create({
+
+            full_name: customer.full_name,
+            email: customer.email,
+            phone: customer.phone
+
+          }, { transaction: trx });
 
       }
 
-      const systemFinance = await SystemFinanceSettings.findOne();
-      const TAX_RATE = Number(systemFinance.tax_rate) / 100;
+      const systemFinance =
+        await SystemFinanceSettings.findOne({
+          transaction: trx
+        });
 
-      // ==========================
-      // LOAD ALL TICKET TYPES
-      // ==========================
+      const TAX_RATE =
+        Number(systemFinance.tax_rate) / 100;
 
-      const ticketTypeIds = items.map(i => i.ticket_type_id);
+      /* LOAD DIRECT TICKET */
 
-      const ticketTypes = await TicketType.findAll({
-        where: { id: ticketTypeIds },
-        include: [{ model: Event, as: "event", attributes: ["id", "creator_id"] }],
-        transaction: trx,
-        lock: trx.LOCK.UPDATE
-      });
+      const ticketIds =
+        items
+          .filter(i => i.type === "ticket")
+          .map(i => i.ticket_type_id);
+
+      const tickets =
+        await TicketType.findAll({
+
+          where: { id: ticketIds },
+
+          include: [{
+            model: Event,
+            as: "event",
+            attributes: ["creator_id"]
+          }],
+
+          transaction: trx,
+          lock: trx.LOCK.UPDATE
+
+        });
 
       const ticketMap = {};
-      ticketTypes.forEach(tt => ticketMap[tt.id] = tt);
+      tickets.forEach(t => ticketMap[t.id] = t);
 
-      // ==========================
-      // PRICE VARIABLES
-      // ==========================
+      /* GLOBAL TOTAL */
 
       let ticketSubtotal = 0;
       let totalAdminFee = 0;
       let totalTax = 0;
+
       let buyerPayTotal = 0;
       let organizerNetTotal = 0;
 
       let adminFeeBearer = null;
       let taxBearer = null;
 
-      const computedItems = [];
-      let creatorIdFromEvent = null;
+      let creatorId = null;
 
-      // ==========================
-      // LOOP ITEMS
-      // ==========================
+      const computedItems = [];
+
+      /* LOOP ITEMS */
 
       for (const item of items) {
 
-        const ticketType = ticketMap[item.ticket_type_id];
+        /* ================= TICKET ================= */
 
-        if (!ticketType) {
-          throw new Error("Ticket type not found");
-        }
+        if (item.type === "ticket") {
 
-        if (!creatorIdFromEvent) {
-          creatorIdFromEvent = ticketType.event.creator_id;
-        }
+          const t = ticketMap[item.ticket_type_id];
+          if (!t) throw new Error("Ticket not found");
 
-        // ==========================
-        // MAX PER ORDER
-        // ==========================
+          validateSaleTime(t);
+          validateMaxOrder(t, item.quantity);
+          validateAttendees(item);
 
-        if (ticketType.max_per_order && item.quantity > ticketType.max_per_order) {
-          throw new Error(
-            `Maximum ${ticketType.max_per_order} ticket allowed for ${ticketType.name}`
+          const available =
+            t.total_stock -
+            t.ticket_sold -
+            t.reserved_stock;
+
+          if (available < item.quantity)
+            throw new Error(`Stock not enough for ${t.name}`);
+
+          await TicketType.increment(
+
+            { reserved_stock: item.quantity },
+
+            { where: { id: t.id }, transaction: trx }
+
           );
+
+          if (!creatorId)
+            creatorId = t.event.creator_id;
+
+          const creatorFinance =
+            await CreatorFinanceSettings.findOne({
+
+              where: { creator_id: creatorId },
+              transaction: trx
+
+            });
+
+          const qty = item.quantity;
+          const price = Number(t.price);
+
+          const subtotal = price * qty;
+
+          let adminFeeSingle = 0;
+
+          if (creatorFinance.admin_fee_type === "flat")
+            adminFeeSingle =
+              Number(creatorFinance.admin_fee_value);
+
+          else
+            adminFeeSingle =
+              price *
+              (Number(creatorFinance.admin_fee_value) / 100);
+
+          const adminFeeTotal =
+            adminFeeSingle * qty;
+
+          const taxTotal =
+            price * TAX_RATE * qty;
+
+          const buyerPaysAdmin =
+            t.admin_fee_included == 1;
+
+          const buyerPaysTax =
+            t.tax_included == 1;
+
+          adminFeeBearer =
+            resolveBearer(
+              adminFeeBearer,
+              buyerPaysAdmin
+            );
+
+          taxBearer =
+            resolveBearer(
+              taxBearer,
+              buyerPaysTax
+            );
+
+          let buyerTotal = subtotal;
+          let organizerNet = subtotal;
+
+          if (buyerPaysAdmin)
+            buyerTotal += adminFeeTotal;
+          else
+            organizerNet -= adminFeeTotal;
+
+          if (buyerPaysTax)
+            buyerTotal += taxTotal;
+          else
+            organizerNet -= taxTotal;
+
+          /* accumulate */
+
+          ticketSubtotal += subtotal;
+
+          totalAdminFee += adminFeeTotal;
+          totalTax += taxTotal;
+
+          buyerPayTotal += buyerTotal;
+          organizerNetTotal += organizerNet;
+
+          computedItems.push({
+
+            type: "ticket",
+
+            ref: t,
+
+            qty,
+
+            attendees: item.attendees,
+
+            ticket_price: price,
+
+            admin_fee_amount: adminFeeTotal,
+
+            tax_amount: taxTotal,
+
+            buyer_pay_amount: buyerTotal,
+
+            organizer_net: organizerNet
+
+          });
+
         }
 
-        const available =
-          ticketType.total_stock -
-          ticketType.ticket_sold -
-          ticketType.reserved_stock;
+        /* ================= BUNDLE ================= */
 
-        if (available < item.quantity) {
-          throw new Error(`Stock not enough for ${ticketType.name}`);
-        }
+        if (item.type === "bundle") {
 
-        // ==========================
-        // RESERVED STOCK
-        // ==========================
+          const bundle =
+            await TicketBundles.findByPk(
 
-        await TicketType.increment(
-          { reserved_stock: item.quantity },
-          {
-            where: { id: ticketType.id },
-            transaction: trx
+              item.bundle_id,
+
+              {
+
+                include: [{
+                  model: TicketBundleItem,
+                  as: "items"
+                }],
+
+                transaction: trx,
+                lock: trx.LOCK.UPDATE
+
+              }
+
+            );
+
+          if (!bundle)
+            throw new Error("Bundle not found");
+
+          validateSaleTime(bundle);
+
+          /* stock bundle */
+
+          const bundleStock =
+            (bundle.total_stock) -
+            (bundle.sold) -
+            (bundle.reserved_stock);
+
+          if (bundleStock < item.quantity)
+            throw new Error("Bundle stock not enough");
+
+          /* load ticket dalam bundle */
+
+          const bundleTicketIds =
+            bundle.items.map(i => i.ticket_type_id);
+
+          const bundleTickets =
+            await TicketType.findAll({
+
+              where: { id: bundleTicketIds },
+
+              include: [{
+                model: Event,
+                as: "event",
+                attributes: ["creator_id"]
+              }],
+
+              transaction: trx,
+              lock: trx.LOCK.UPDATE
+
+            });
+
+          const bundleTicketMap = {};
+
+          bundleTickets.forEach(t => {
+
+            bundleTicketMap[t.id] = t;
+
+            if (!creatorId)
+              creatorId = t.event.creator_id;
+
+          });
+
+          /* reserve stock */
+
+          for (const bItem of bundle.items) {
+
+            const t =
+              bundleTicketMap[bItem.ticket_type_id];
+
+            const needed =
+              bItem.quantity * item.quantity;
+
+            const available =
+              t.total_stock -
+              t.ticket_sold -
+              t.reserved_stock;
+
+            if (available < needed)
+              throw new Error(
+                `Stock not enough for ${t.name}`
+              );
+
+            await TicketType.increment(
+
+              { reserved_stock: needed },
+
+              {
+                where: { id: t.id },
+                transaction: trx
+              }
+
+            );
+
           }
-        );
 
-        const qty = item.quantity;
-        const price = Number(ticketType.price);
+          await TicketBundles.increment(
 
-        const itemTicketSubtotal = price * qty;
+            { reserved_stock: item.quantity },
 
-        ticketSubtotal += itemTicketSubtotal;
+            {
+              where: { id: bundle.id },
+              transaction: trx
+            }
 
-        // ==========================
-        // ADMIN FEE
-        // ==========================
+          );
 
-        const creatorFinance = await CreatorFinanceSettings.findOne({
-          where: { creator_id: ticketType.event.creator_id }
-        });
+          /* fee calculation */
 
-        let adminFeeSingle = 0;
+          const creatorFinance =
+            await CreatorFinanceSettings.findOne({
 
-        if (creatorFinance.admin_fee_type === "flat") {
-          adminFeeSingle = Number(creatorFinance.admin_fee_value);
-        } else {
-          adminFeeSingle = price * (Number(creatorFinance.admin_fee_value) / 100);
+              where: { creator_id: creatorId },
+              transaction: trx
+
+            });
+
+          let bundleAdminFee = 0;
+          let bundleTax = 0;
+
+          for (const bItem of bundle.items) {
+
+            const t =
+              bundleTicketMap[bItem.ticket_type_id];
+
+            const unitPrice =
+              Number(t.price);
+
+            const unitQty =
+              bItem.quantity * item.quantity;
+
+            let adminFeeSingle = 0;
+
+            if (creatorFinance.admin_fee_type === "flat")
+              adminFeeSingle =
+                Number(creatorFinance.admin_fee_value);
+
+            else
+              adminFeeSingle =
+                unitPrice *
+                (Number(
+                  creatorFinance.admin_fee_value
+                ) / 100);
+
+            const adminFeeTotal =
+              adminFeeSingle * unitQty;
+
+            const taxTotal =
+              unitPrice * TAX_RATE * unitQty;
+
+            const buyerPaysAdmin =
+              t.admin_fee_included == 1;
+
+            const buyerPaysTax =
+              t.tax_included == 1;
+
+            adminFeeBearer =
+              resolveBearer(
+                adminFeeBearer,
+                buyerPaysAdmin
+              );
+
+            taxBearer =
+              resolveBearer(
+                taxBearer,
+                buyerPaysTax
+              );
+
+            /* IMPORTANT:
+            fee masuk buyer hanya jika buyer tanggung
+            */
+
+            if (buyerPaysAdmin)
+              bundleAdminFee += adminFeeTotal;
+            else
+              organizerNetTotal -= adminFeeTotal;
+
+            if (buyerPaysTax)
+              bundleTax += taxTotal;
+            else
+              organizerNetTotal -= taxTotal;
+
+            totalAdminFee += adminFeeTotal;
+            totalTax += taxTotal;
+
+          }
+
+          /* bundle price */
+
+          const bundleSubtotal =
+            Number(bundle.price) *
+            item.quantity;
+
+          ticketSubtotal += bundleSubtotal;
+
+          const buyerBundleTotal =
+            bundleSubtotal +
+            bundleAdminFee +
+            bundleTax;
+
+          buyerPayTotal += buyerBundleTotal;
+
+          organizerNetTotal += bundleSubtotal;
+
+          /* save */
+
+          computedItems.push({
+
+            type: "bundle",
+
+            ref: bundle,
+
+            qty: item.quantity,
+
+            attendees: item.attendees,
+
+            ticket_price: bundle.price,
+
+            admin_fee_amount: bundleAdminFee,
+
+            tax_amount: bundleTax,
+
+            buyer_pay_amount: buyerBundleTotal,
+
+            organizer_net: bundleSubtotal
+
+          });
+
         }
-
-        const itemAdminFee = adminFeeSingle * qty;
-        const itemTax = price * TAX_RATE * qty;
-
-        const buyerPaysAdmin = ticketType.admin_fee_included == 1;
-        const buyerPaysTax = ticketType.tax_included == 1;
-
-        adminFeeBearer = resolveBearer(adminFeeBearer, buyerPaysAdmin);
-        taxBearer = resolveBearer(taxBearer, buyerPaysTax);
-
-        let itemBuyerPay = itemTicketSubtotal;
-        let itemOrganizerNet = itemTicketSubtotal;
-
-        if (buyerPaysAdmin) itemBuyerPay += itemAdminFee;
-        else itemOrganizerNet -= itemAdminFee;
-
-        if (buyerPaysTax) itemBuyerPay += itemTax;
-        else itemOrganizerNet -= itemTax;
-
-        totalAdminFee += itemAdminFee;
-        totalTax += itemTax;
-
-        buyerPayTotal += itemBuyerPay;
-        organizerNetTotal += itemOrganizerNet;
-
-        computedItems.push({
-          ticketType,
-          qty,
-          ticket_price: price,
-          itemAdminFee,
-          itemTax,
-          itemBuyerPay,
-          itemOrganizerNet,
-          attendees: item.attendees
-        });
 
       }
 
-      if (!adminFeeBearer) adminFeeBearer = "buyer";
-      if (!taxBearer) taxBearer = "buyer";
+      /* default bearer */
 
-      // ==========================
-      // CREATE ORDER
-      // ==========================
+      if (!adminFeeBearer)
+        adminFeeBearer = "buyer";
 
-      const random4 = Math.random().toString(36).substring(2, 6).toUpperCase();
-      const timestamp = new Date().toISOString().replace(/[-:TZ.]/g, "").slice(2, 12);
+      if (!taxBearer)
+        taxBearer = "buyer";
 
-      const codeOrder = `${timestamp}-${random4}`;
+      /* create order */
 
-      const order = await Order.create({
-        id: uuid(),
-        creator_id: creatorIdFromEvent,
-        code_order: codeOrder,
+      const random4 =
+        Math.random()
+          .toString(36)
+          .substring(2, 6)
+          .toUpperCase();
 
-        customer_id: customerUser.id,
-        customer_name: customer.full_name,
-        customer_email: customer.email,
-        customer_phone: customer.phone,
-        type_identity: customer.type_identity,
-        no_identity: customer.no_identity,
+      const timestamp =
+        new Date()
+          .toISOString()
+          .replace(/[-:TZ.]/g, "")
+          .slice(2, 12);
 
-        ticket_subtotal: ticketSubtotal,
-        admin_fee_amount: totalAdminFee,
-        tax_amount: totalTax,
+      const codeOrder =
+        `${timestamp}-${random4}`;
 
-        buyer_pay_total: buyerPayTotal,
-        organizer_net_total: organizerNetTotal,
+      const order =
+        await Order.create({
 
-        admin_fee_bearer: adminFeeBearer,
-        tax_bearer: taxBearer,
+          id: uuid(),
 
-        status: "waiting_payment",
-        expired_at: new Date(Date.now() + 15 * 60 * 1000)
+          creator_id: creatorId,
 
-      }, { transaction: trx });
+          code_order: codeOrder,
 
-      // ==========================
-      // ORDER ITEMS
-      // ==========================
+          customer_id: customerUser.id,
 
-      const orderItemsPayload = computedItems.map(data => ({
+          customer_name: customer.full_name,
+          customer_email: customer.email,
+          customer_phone: customer.phone,
 
-        id: uuid(),
-        order_id: order.id,
-        ticket_type_id: data.ticketType.id,
-        quantity: data.qty,
+          ticket_subtotal: ticketSubtotal,
 
-        ticket_price: data.ticket_price,
-        admin_fee_amount: data.itemAdminFee,
-        tax_amount: data.itemTax,
+          admin_fee_amount: totalAdminFee,
+          tax_amount: totalTax,
 
-        buyer_pay_amount: data.itemBuyerPay,
-        organizer_net: data.itemOrganizerNet,
+          buyer_pay_total: buyerPayTotal,
 
-        attendees: data.attendees
+          organizer_net_total: organizerNetTotal,
 
-      }));
+          admin_fee_bearer: adminFeeBearer,
+          tax_bearer: taxBearer,
 
-      await OrderItem.bulkCreate(orderItemsPayload, { transaction: trx });
+          payment_method: payload.payment_method,
+
+          status: "waiting_payment",
+
+          expired_at:
+            new Date(
+              Date.now() + 15 * 60 * 1000
+            )
+
+        }, { transaction: trx });
+
+      /* order items */
+
+      const orderItems =
+        computedItems.map(data => ({
+
+          id: uuid(),
+
+          order_id: order.id,
+
+          item_type: data.type,
+
+          ticket_type_id:
+            data.type === "ticket"
+              ? data.ref.id
+              : null,
+
+          bundle_id:
+            data.type === "bundle"
+              ? data.ref.id
+              : null,
+
+          quantity: data.qty,
+
+          ticket_price: data.ticket_price,
+
+          admin_fee_amount: data.admin_fee_amount,
+          tax_amount: data.tax_amount,
+
+          buyer_pay_amount: data.buyer_pay_amount,
+          organizer_net: data.organizer_net,
+
+          attendees: data.attendees
+
+        }));
+
+      await OrderItem.bulkCreate(
+        orderItems,
+        { transaction: trx }
+      );
 
       await trx.commit();
 
       return {
+
         order_id: order.id,
+
         code_order: order.code_order,
+
         buyer_pay_total: buyerPayTotal,
+
         expired_at: order.expired_at
+
       };
 
-    } catch (err) {
+    }
+
+    catch (err) {
 
       await trx.rollback();
       throw err;
@@ -283,15 +593,76 @@ module.exports = {
 
 };
 
+/* helpers */
+
 function resolveBearer(current, buyerPays) {
 
-  if (current == null) return buyerPays ? "buyer" : "organizer";
+  if (current == null)
+    return buyerPays
+      ? "buyer"
+      : "organizer";
 
-  if (current === "mixed") return "mixed";
+  if (current === "mixed")
+    return "mixed";
 
-  if (current === "buyer" && !buyerPays) return "mixed";
-  if (current === "organizer" && buyerPays) return "mixed";
+  if (
+    current === "buyer"
+    && !buyerPays
+  )
+    return "mixed";
+
+  if (
+    current === "organizer"
+    && buyerPays
+  )
+    return "mixed";
 
   return current;
+
+}
+
+function validateSaleTime(entity) {
+
+  const now = new Date();
+
+  const start = new Date(entity.sale_start);
+  const end = new Date(entity.sale_end);
+
+  if (now < start)
+    throw new Error(
+      "Ticket not yet on sale"
+    );
+
+  if (now > end)
+    throw new Error(
+      "Ticket sale ended"
+    );
+
+}
+
+function validateAttendees(item) {
+
+  if (
+    !item.attendees
+    || item.attendees.length
+    !== item.quantity
+  )
+
+    throw new Error(
+      "Attendees must match quantity"
+    );
+
+}
+
+function validateMaxOrder(ticket, qty) {
+
+  if (
+    ticket.max_per_order
+    && qty > ticket.max_per_order
+  )
+
+    throw new Error(
+      `Max ${ticket.max_per_order}`
+    );
 
 }

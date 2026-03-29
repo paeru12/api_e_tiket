@@ -4,7 +4,7 @@ const ticketCronService = require("../services/fe/cronTicketSender.service");
 
 module.exports = () => {
   // setiap 5 menit
-  cron.schedule("*/5 * * * *", async () => {
+  cron.schedule("*/2 * * * *", async () => {
     try {
       console.log("⏱️ Cron: Sending scheduled tickets...");
       await ticketCronService.sendTickets();

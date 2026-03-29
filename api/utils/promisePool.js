@@ -1,6 +1,6 @@
 async function promisePool(items, worker, concurrency = 5) {
 
-  const executing = [];
+  const executing = []; 
 
   for (const item of items) {
 

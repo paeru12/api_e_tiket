@@ -7,23 +7,27 @@ const {
   Payment,
   OrderItem,
   TicketType,
+  TicketBundles,
+  TicketBundleItem,
   CreatorFinancials
 } = require("../../../models");
 
 const ticketService = require("../../services/fe/ticket.service");
 const payoutService = require("../../services/dash/payout.service");
 
+const SUCCESS_STATUS = ["PAID", "SETTLED", "SUCCEEDED"];
+const EXPIRED_STATUS = ["EXPIRED"];
+const REFUND_STATUS = ["REFUND", "REFUNDED"];
 module.exports = {
 
   async xenditCallback(req, res) {
-
 
     try {
 
       const token = req.headers["x-callback-token"];
 
       if (token !== process.env.XENDIT_CALLBACK_TOKEN) {
-        return res.status(401).json({ message: "Invalid callback token" });
+        return res.status(401).json({ message: "Invalid token" });
       }
 
       const { id, status } = req.body;
@@ -34,7 +38,7 @@ module.exports = {
 
       if (!payment) return res.json({ success: true });
 
-      // idempotent callback
+      // prevent duplicate process
       if (payment.status === "paid") {
         return res.json({ success: true });
       }
@@ -43,167 +47,229 @@ module.exports = {
 
       try {
 
-        const lockedPayment = await Payment.findOne({
-          where: { id: payment.id },
+        const lockedPayment = await Payment.findByPk(
+          payment.id,
+          { transaction: trx, lock: trx.LOCK.UPDATE }
+        );
+
+        const order = await Order.findByPk(
+          lockedPayment.order_id,
+          { transaction: trx, lock: trx.LOCK.UPDATE }
+        );
+
+        const items = await OrderItem.findAll({
+          where: { order_id: order.id },
           transaction: trx,
           lock: trx.LOCK.UPDATE
         });
 
-        const order = await Order.findByPk(
-          lockedPayment.order_id,
-          {
-            transaction: trx,
-            lock: trx.LOCK.UPDATE
-          }
-        );
+        /* ===============================
+           SUCCESS PAYMENT
+        =============================== */
 
-        // =====================================
-        // CASE 1: PAID
-        // =====================================
+        if (SUCCESS_STATUS.includes(status)) {
 
-        if (status === "PAID") {
-
-          const items = await OrderItem.findAll({
-            where: { order_id: order.id },
-            transaction: trx
-          });
-
-          // ambil semua ticket type sekaligus
-          const ticketTypeIds = items.map(i => i.ticket_type_id);
-
-          const ticketTypes = await TicketType.findAll({
-            where: { id: ticketTypeIds },
-            transaction: trx,
-            lock: trx.LOCK.UPDATE
-          });
-
-          const ticketTypeMap = {};
-          ticketTypes.forEach(tt => {
-            ticketTypeMap[tt.id] = tt;
-          });
-
-          const eventSoldMap = {};
+          let eventSoldMap = {};
 
           for (const item of items) {
 
-            const tt = ticketTypeMap[item.ticket_type_id];
-            if (!tt) continue;
+            /* ticket */
 
-            tt.reserved_stock -= item.quantity;
-            tt.ticket_sold += item.quantity;
+            if (item.item_type === "ticket") {
 
-            eventSoldMap[tt.event_id] =
-              (eventSoldMap[tt.event_id] || 0) + item.quantity;
+              const tt = await TicketType.findByPk(
+                item.ticket_type_id,
+                { transaction: trx, lock: trx.LOCK.UPDATE }
+              );
+
+              tt.reserved_stock -= item.quantity;
+              tt.ticket_sold += item.quantity;
+
+              await tt.save({ transaction: trx });
+
+              eventSoldMap[tt.event_id] =
+                (eventSoldMap[tt.event_id] || 0) + item.quantity;
+
+            }
+
+            /* bundle */
+
+            if (item.item_type === "bundle") {
+
+              const bundle = await TicketBundles.findByPk(
+                item.bundle_id,
+                {
+                  include: [{
+                    model: TicketBundleItem,
+                    as: "items"
+                  }],
+                  transaction: trx,
+                  lock: trx.LOCK.UPDATE
+                }
+              );
+
+              bundle.reserved_stock -= item.quantity;
+              bundle.sold += item.quantity;
+
+              await bundle.save({ transaction: trx });
+
+              for (const bItem of bundle.items) {
+
+                const tt = await TicketType.findByPk(
+                  bItem.ticket_type_id,
+                  { transaction: trx, lock: trx.LOCK.UPDATE }
+                );
+
+                const soldQty =
+                  bItem.quantity * item.quantity;
+
+                tt.reserved_stock -= soldQty;
+                tt.ticket_sold += soldQty;
+
+                await tt.save({ transaction: trx });
+
+                eventSoldMap[tt.event_id] =
+                  (eventSoldMap[tt.event_id] || 0) + soldQty;
+
+              }
+
+            }
+
           }
 
-          // save semua ticket type
-          await Promise.all(
-            ticketTypes.map(tt =>
-              tt.save({ transaction: trx })
-            )
-          );
+          /* update event sold */
 
-          // update event ticket sold
-          const eventUpdates = Object.entries(eventSoldMap)
-            .map(([eventId, qty]) =>
-              Event.increment(
-                { total_ticket_sold: qty },
-                {
-                  where: { id: eventId },
-                  transaction: trx
-                }
-              )
+          for (const [eventId, qty] of Object.entries(eventSoldMap)) {
+
+            await Event.increment(
+              { total_ticket_sold: qty },
+              { where: { id: eventId }, transaction: trx }
             );
 
-          await Promise.all(eventUpdates);
+          }
 
-          // update payment + order
-          await Promise.all([
-            lockedPayment.update(
-              { status: "paid", paid_at: new Date() },
-              { transaction: trx }
-            ),
-            order.update(
-              { status: "paid" },
-              { transaction: trx }
-            )
-          ]);
+          /* update order & payment */
 
-          // update creator financial
+          await lockedPayment.update({
+            status: "paid",
+            paid_at: new Date()
+          }, { transaction: trx });
+
+          await order.update({
+            status: "paid"
+          }, { transaction: trx });
+
+          /* creator finance */
+
           let fin = await CreatorFinancials.findOne({
+
             where: { creator_id: order.creator_id },
+
             transaction: trx,
+
             lock: trx.LOCK.UPDATE
+
           });
 
-          const orderIncome = Number(order.organizer_net_total || 0);
+
+          const income =
+            Number(order.organizer_net_total);
+
 
           if (!fin) {
 
             await CreatorFinancials.create({
+
               creator_id: order.creator_id,
-              total_income: orderIncome,
-              current_balance: orderIncome,
+
+              total_income: income,
+
+              current_balance: income,
+
               total_payout: 0,
+
               pending_income: 0
+
             }, { transaction: trx });
 
-          } else {
+          }
+          else {
 
             fin.total_income =
-              Number(fin.total_income) + orderIncome;
+              toMoney(
+                Number(fin.total_income) + income
+              );
 
             fin.current_balance =
-              Number(fin.current_balance) + orderIncome;
+              toMoney(
+                Number(fin.current_balance) + income
+              );
 
-            await fin.save({ transaction: trx });
+
+            await fin.save({
+              transaction: trx
+            });
 
           }
+          const io =
+            req.app.get("io");
 
-          // generate ticket
+          io.to(
+            `creator-${order.creator_id}`
+          ).emit(
+            "finance:update",
+            {
+
+              type: "income",
+
+              amount: income
+
+            }
+          );
+
+          /* generate ticket */
+
           await ticketService.generateTickets(order.id, trx);
 
         }
 
-        // =====================================
-        // CASE 2: EXPIRED
-        // =====================================
+        /* ===============================
+           EXPIRED
+        =============================== */
 
-        if (status === "EXPIRED") {
+        if (EXPIRED_STATUS.includes(status)) {
 
           await payoutService.decreaseIncome(order.id, trx);
 
-          await Promise.all([
-            order.update(
-              { status: "expired" },
-              { transaction: trx }
-            ),
-            lockedPayment.update(
-              { status: "expired" },
-              { transaction: trx }
-            )
-          ]);
+          await order.update(
+            { status: "expired" },
+            { transaction: trx }
+          );
+
+          await lockedPayment.update(
+            { status: "expired" },
+            { transaction: trx }
+          );
 
         }
 
-        // =====================================
-        // CASE 3: REFUND
-        // =====================================
+        /* ===============================
+           REFUND
+        =============================== */
 
-        if (status === "REFUNDED" || status === "REFUND") {
+        if (REFUND_STATUS.includes(status)) {
 
           await payoutService.decreaseIncome(order.id, trx);
 
-          await Promise.all([
-            order.update(
-              { status: "refunded" },
-              { transaction: trx }
-            ),
-            lockedPayment.update(
-              { status: "refunded" },
-              { transaction: trx }
-            )
-          ]);
+          await order.update(
+            { status: "refunded" },
+            { transaction: trx }
+          );
+
+          await lockedPayment.update(
+            { status: "refunded" },
+            { transaction: trx }
+          );
 
         }
 
@@ -215,16 +281,28 @@ module.exports = {
 
         await trx.rollback();
 
-        return res.status(200).json({ success: true });
+        console.error("callback trx error", err);
+
+        return res.json({ success: true });
 
       }
 
     } catch (err) {
 
-      return res.status(200).json({ success: true });
+      console.error("callback error", err);
+
+      return res.json({ success: true });
 
     }
 
   }
 
 };
+
+function toMoney(val) {
+
+  return Number(
+    Number(val).toFixed(2)
+  );
+
+}

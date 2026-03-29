@@ -17,5 +17,5 @@ router.put("/creator-finance-setting/:creator_id", controller.updateCreatorFinan
 router.get("/system-finance-setting", controller.getSystemFinanceSetting);
 router.put("/system-finance-setting", controller.updateSystemFinanceSetting);
 router.get("/bank/info", controller.bankInfo);
-
+router.post("/verify-password", controller.verifyPassword);
 module.exports = router;

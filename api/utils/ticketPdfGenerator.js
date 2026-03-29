@@ -1,76 +1,203 @@
-const QRCode = require("qrcode");
-const sharp = require("sharp");
-const fs = require("fs");
 const path = require("path");
 
-const { getBrowser } = require("./browserPool");
-const getTemplate = require("./templateCache");
-const { generateSignature } = require("./qrSignature");
+const { getBrowser } =
+  require("./browserPool");
 
-async function imageToBase64(filePath) {
+const ejs = require("ejs");
+const fs = require("fs");
 
-  const ext = path.extname(filePath).toLowerCase();
+const getQR =
+  require("../../utils/qrCache");
 
-  if (ext === ".webp") {
-    const buffer = await sharp(filePath).png().toBuffer();
-    return `data:image/png;base64,${buffer.toString("base64")}`;
+const {
+  imageToBase64Cached,
+  watermarkBase64Cached
+} = require("../../utils/imageCache");
+
+const {
+  generateSignature
+} = require("./qrSignature");
+
+
+let compiledTemplate;
+
+function getTemplate() {
+
+  if (!compiledTemplate) {
+
+    const templatePath =
+      path.join(
+        process.cwd(),
+        "api/templates/ticket.html"
+      );
+
+    compiledTemplate =
+      ejs.compile(
+        fs.readFileSync(
+          templatePath,
+          "utf8"
+        )
+      );
+
   }
 
-  const buffer = fs.readFileSync(filePath);
+  return compiledTemplate;
 
-  return `data:image/${ext.replace(".", "")};base64,${buffer.toString("base64")}`;
 }
 
-module.exports = async function generateTicketPDF(ticketData) {
 
-  const { ticket, event, ticketType, promoter } = ticketData;
+module.exports =
+async function generateTicketPDF(
+  ticket,
+  event
+) {
 
-  const signature = generateSignature(ticket.ticket_code, ticket.event_id);
+  const template =
+    getTemplate();
 
-  const payload = JSON.stringify({
-    t: ticket.ticket_code,
-    e: ticket.event_id,
-    s: signature
-  });
 
-  const qr = await QRCode.toDataURL(payload, {
-    errorCorrectionLevel: "H"
-  });
+  const logo =
+    await imageToBase64Cached(
 
-  const template = getTemplate();
+      path.join(
+        process.cwd(),
+        "public/uploads/logo/logo.png"
+      ),
 
-  const logo = await imageToBase64(
-    path.join(process.cwd(), "public/uploads/logo/belisenang_png.png")
-  );
+      { width: 280 }
 
-  const banner = await imageToBase64(
-    path.join(process.cwd(), "public", event.image.replace(/^\/+/, ""))
-  );
+    );
 
-  const html = template({
-    logo,
-    banner,
-    qr,
-    ticketCode: ticket.ticket_code,
-    eventName: event.name.toUpperCase(),
-    ownerName: ticket.owner_name.toUpperCase(),
-    email: ticket.owner_email,
-    category: ticketType.name.toUpperCase(),
-    identity: `${ticket.type_identity} - ${ticket.no_identity}`,
-    promoter
-  });
 
-  const browser = await getBrowser();
-  const page = await browser.newPage();
+  const watermark =
+    await watermarkBase64Cached(
 
-  await page.setContent(html, { waitUntil: "domcontentloaded" });
+      path.join(
+        process.cwd(),
+        "public/uploads/logo/watermark.png"
+      )
 
-  const pdf = await page.pdf({
-    format: "A4",
-    printBackground: true
-  });
+    );
 
-  await page.close();
 
-  return pdf;
+  const banner =
+    await imageToBase64Cached(
+
+      path.join(
+        process.cwd(),
+        "public",
+        event.image.replace(/^\/+/, "")
+      ),
+
+      { width: 900 }
+
+    );
+
+
+  const signature =
+    generateSignature(
+      ticket.ticket_code,
+      ticket.event_id
+    );
+
+
+  const payload =
+    JSON.stringify({
+
+      t: ticket.ticket_code,
+      e: ticket.event_id,
+      s: signature
+
+    });
+
+
+  const qr =
+    await getQR(payload);
+
+
+  const html =
+    template({
+
+      tickets: [
+
+        {
+
+          logo,
+          watermark,
+          banner,
+          qr,
+
+          ticketCode:
+            ticket.ticket_code,
+
+          eventName:
+            event.name.toUpperCase(),
+
+          ownerName:
+            ticket.owner_name.toUpperCase(),
+
+          email:
+            ticket.owner_email,
+
+          category:
+            ticket.ticket_type.name.toUpperCase(),
+
+          identity:
+            `${ticket.type_identity} - ${ticket.no_identity}`,
+
+          promoter:
+            event.name
+
+        }
+
+      ]
+
+    });
+
+
+  let page;
+
+  try {
+
+    const browser =
+      await getBrowser();
+
+    page =
+      await browser.newPage();
+
+    await page.setContent(
+      html,
+      {
+        waitUntil: "networkidle0"
+      }
+    );
+
+    return await page.pdf({
+
+      format: "A4",
+
+      printBackground: true,
+
+      margin: {
+        top: "0",
+        right: "0",
+        bottom: "0",
+        left: "0"
+      }
+
+    });
+
+  }
+
+  finally {
+
+    if (page) {
+
+      await page.close()
+        .catch(() => {});
+
+    }
+
+  }
+
 };

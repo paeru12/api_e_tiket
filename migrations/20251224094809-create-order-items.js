@@ -15,9 +15,19 @@ module.exports = {
         allowNull: false,
       },
 
+      item_type: {
+        type: Sequelize.ENUM("ticket", "bundle"),
+        allowNull: false
+      },
+
       ticket_type_id: {
         type: Sequelize.UUID,
-        allowNull: false,
+        allowNull: true
+      },
+
+      bundle_id: {
+        type: Sequelize.UUID,
+        allowNull: true
       },
 
       quantity: Sequelize.BIGINT,
